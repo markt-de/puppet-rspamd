@@ -1,0 +1,16 @@
+{
+  "name": "oxc-rspamd",
+  "version": "0.1.0",
+  "author": "oxc",
+  "summary": "Installs and manages Rspamd spam filter",
+  "license": "Apache-2.0",
+  "source": "https://github.com/oxc/puppet-rspamd",
+  "project_page": "https://github.com/oxc/puppet-rspamd",
+  "issues_url": "https://github.com/oxc/puppet-rspamd/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
+    {"name":"puppetlabs-concat","version_requirement":">= 4.0.0"}
+  ],
+  "data_provider": null
+}
+
