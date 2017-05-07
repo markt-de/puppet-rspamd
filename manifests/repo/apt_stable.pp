@@ -18,9 +18,10 @@ class rspamd::repo::apt_stable inherits rspamd::repo {
     location    => $_baseurl,
     release     => $::lsbdistcodename,
     repos       => "main",
-    key         => '3FA347D5E599BE4595CA2576FFA232EDBF21E25E',
-    key_source  => 'https://rspamd.com/apt-stable/gpg.key',
-    include_src => false,
+    key         => {
+      id          => '3FA347D5E599BE4595CA2576FFA232EDBF21E25E',
+      source      => 'https://rspamd.com/apt-stable/gpg.key',
+    }
   }
 
   Apt::Source['rspamd_stable']->Package<|tag == 'rspamd'|>
