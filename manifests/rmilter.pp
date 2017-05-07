@@ -1,7 +1,7 @@
-# Class: rspamd
+# Class: rspamd::rmilter
 # ===========================
 #
-# Full description of class rspamd here.
+# Installs and configures rmilter
 #
 # Parameters
 # ----------
@@ -42,60 +42,48 @@
 #
 # Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
 #
-class rspamd (
+class rspamd::rmilter (
   Boolean $packages_install        = true,
   Boolean $service_manage          = true,
 
-  Boolean $rmilter                 = true,
-
-  Optional[String] $repo_baseurl   = undef,
-  Boolean $manage_package_repo     = true,
-
-  String $config_path              = "/etc/rspamd",
+  String $config_path              = "/etc",
   Boolean $purge_unmanaged         = true,
+
+  Boolean $disable_legacy_features = true,
 ) {
 
   if ($packages_install) {
-    package { 'rspamd':
+    package { 'rmilter':
       ensure => 'present',
-      name   => 'rspamd',
+      name   => 'rmilter',
     }
-
   }
 
   if ($purge_unmanaged) {
-    file { "purge unmanaged rspamd local.d files":
-      path => "${config_path}/local.d",
+    file { "purge unmanaged rmilter.conf.d files":
+      path => "${config_path}/rmilter.conf.d",
       ensure => 'directory',
       recurse => 'true',
       purge => 'true',
     }
-    file { "purge unmanaged rspamd override.d files":
-      path => "${config_path}/override.d",
-      ensure => 'directory',
-      recurse => 'true',
-      purge => 'true',
-    }
-  }
 
+    rspamd::ucl::file { "${config_path}/rmilter.local.conf": }
+  }
 
   if ($service_manage) {
-    service { 'rspamd':
+    service { 'rmilter':
       ensure  => 'running',
       enable  => true,
-      require => Package['rspamd'],
-    }
-  }  
-
- 
-  if($manage_package_repo) {
-    class { 'rspamd::repo':
-      baseurl => $repo_baseurl,
+      require => Package['rmilter'],
     }
   }
 
-  if ($rmilter) {
-    class { 'rspamd::rmilter': }
+  if ($disable_legacy_features) {
+    rspamd::rmilter::config {
+      default: comment => "Disable legacy feature. Use Rspamd module instead.";
+      'limits.enable': value => false;
+      'greylisting.enable': value => false;
+      'dkim.enable': value => false;
+    }
   }
-
 }
