@@ -16,4 +16,4 @@
 #
 # 2-clause BSD license
 #
-type Rspamd::ValueType = Enum['auto', 'string', 'number', 'boolean']
+type Rspamd::Ucl::ValueType = Enum['auto', 'string', 'number', 'boolean']

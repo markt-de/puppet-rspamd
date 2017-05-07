@@ -1,6 +1,6 @@
-# == Function: rspamd::print_config_value()
+# == Function: rspamd::ucl::print_config_value()
 #
-# Returns a properly quoted config value
+# Returns a properly quoted UCL config value
 #
 # === Authors
 #
@@ -14,7 +14,7 @@
 #
 # 2-clause BSD license
 #
-function rspamd::print_config_value($value, Rspamd::ValueType $type) {
+function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
   $re_number = /\A(\d+(\.\d+)?([kKmMgG]b?|s|min|d|w|y)?|0x[0-9A-F]+)\z/
   $re_boolean = /\A(true|false|on|off|yes|no)\z/
   $target_type = $type ? {

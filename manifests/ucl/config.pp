@@ -1,9 +1,9 @@
-# Class: rspamd::ucl_config
+# Class: rspamd::ucl::config
 # ===========================
 #
 # Manages a single UCL (Universal Configuration Language) config entry
 #
-# This class is only for internal use, use rspam::config or rspam::rmilter_config
+# This class is only for internal use, use rspam::config or rspam::rmilter::config
 # instead.
 #
 # Authors
@@ -16,21 +16,15 @@
 #
 # Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
 #
-define rspamd::ucl_config (
+define rspamd::ucl::config (
   Stdlib::Absolutepath $file,
   String $key,
   $value,
-  Rspamd::ValueType $type           = 'auto',
+  Rspamd::Ucl::ValueType $type      = 'auto',
   Optional[String] $comment         = undef,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
-  ensure_resource('concat', $file, {
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
-    warn  => true,
-    order => 'alpha',
-  })
+  ensure_resource('rspamd::ucl::file', $file)
 
   $sections = split($key, '\.')
   $depth = length($sections)-1
@@ -62,7 +56,7 @@ define rspamd::ucl_config (
     }
   }
 
-  $printed_value = rspamd::print_config_value($value, $type)
+  $printed_value = rspamd::ucl::print_config_value($value, $type)
   $semicolon = $printed_value ? {
     /\A<</ => '',
     default => ";\n"

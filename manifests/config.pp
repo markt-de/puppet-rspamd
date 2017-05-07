@@ -75,7 +75,7 @@ define rspamd::config (
   Optional[String] $file            = undef,
   Optional[String] $key             = undef,
   $value,
-  Rspamd::ValueType $type           = 'auto',
+  Rspamd::Ucl::ValueType $type      = 'auto',
   Enum['merge', 'override'] $mode   = 'merge',
   Optional[String] $comment         = undef,
   Enum['present', 'absent'] $ensure = 'present',
@@ -97,7 +97,7 @@ define rspamd::config (
   }
   $full_file = "${rspamd::config_path}/${folder}/${configfile}.conf"
 
-  rspamd::ucl_config { "rspamd config ${full_file} ${configkey}":
+  rspamd::ucl::config { "rspamd config ${full_file} ${configkey}":
     file    => $full_file,
     key     => $configkey,
     value   => $value,
