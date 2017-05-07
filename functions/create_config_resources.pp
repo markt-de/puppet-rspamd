@@ -28,6 +28,12 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
       Hash: {
         rspamd::create_config_resources($value, $params, $qualified_key)
       }
+      Array: {
+        $indexed_hash = $value.map |$index, $v| {
+          { "${key}[${index}]" => $v }
+        }.reduce({}) |$a,$b| { $a + $b }
+        rspamd::create_config_resources($indexed_hash, $params, $section)
+      }
       default: {
         rspamd::config { "${params[file]}:${qualified_key}":
           key   => $qualified_key,

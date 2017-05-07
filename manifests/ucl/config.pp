@@ -33,9 +33,14 @@ define rspamd::ucl::config (
       $section = join($sections[0,$i], '/')
       $indent = sprintf("%${($i-1)*2}s", '')
 
+      # strip the [x] array qualifier
+      $section_name = $sections[$i-1] ? {
+        /^(.*)\[\d+\]$/ => $1,
+        default         => $sections[$i-1]
+      }
       ensure_resource('concat::fragment', "rspamd ${file} UCL config /${section} 03 section start", {
         target => $file,
-        content => "${indent}${sections[$i-1]} {\n",
+        content => "${indent}${section_name} {\n",
       })
       ensure_resource('concat::fragment', "rspamd ${file} UCL config /${section}/~ section end", { # ~ sorts last
         target => $file,
@@ -47,7 +52,10 @@ define rspamd::ucl::config (
   # now for the value itself
   $indent = sprintf("%${$depth*2}s", '')
   $section_key = join($sections, '/')
-  $entry_key = $sections[-1]
+  $entry_key = $sections[-1] ? {
+    /^(.*)\[\d+\]$/ => $1,
+    default        => $sections[-1]
+  }
 
   if ($comment) {
     concat::fragment { "rspamd ${file} UCL config /${section_key} 01 comment":

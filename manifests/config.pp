@@ -24,6 +24,12 @@
 # E.g. the value `backend.servers` would denote the `servers` key in the `backend`
 # section.
 #
+# If arrays of values are required (including arrays of maps, i.e. multiple 
+# sections with the same name), the key must be succeeded by an bracketed index,
+# e.g.
+# statfile[0].token = "BAYES_HAM"
+# statifle[1].token = "BAYES_SPAM"
+#
 # * `file`
 # The file to put the value in. This module keeps Rspamd's default configuration
 # and makes use of its overrides. The value of this parameter must not include
