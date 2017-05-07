@@ -97,54 +97,14 @@ define rspamd::config (
   }
   $full_file = "${rspamd::config_path}/${folder}/${configfile}.conf"
 
-  ensure_resource('concat', $full_file, {
-    owner => 'root',
-    group => 'root',
-    mode  => '0644',
-    warn  => true,
-    order => 'alpha',
-    notify => Service['rspamd'],
-  })
-
-  $sections = split($configkey, '\.')
-  $depth = length($sections)-1
-  if ($depth > 0) {
-    Integer[1,$depth].each |$i| {
-      $section = join($sections[0,$i], '/')
-      $indent = sprintf("%${($i-1)*2}s", '')
-
-      ensure_resource('concat::fragment', "rspamd ${configfile} config /${section} 03 section start", {
-        target => $full_file,
-        content => "${indent}${sections[$i-1]} {\n",
-      })
-      ensure_resource('concat::fragment', "rspamd ${configfile} config /${section}/~ section end", { # ~ sorts last
-        target => $full_file,
-        content => "${indent}}\n",
-      })
-    }
-  }
-
-  # now for the value itself
-  $indent = sprintf("%${$depth*2}s", '')
-  $section_key = join($sections, '/')
-  $entry_key = $sections[-1]
-
-  if ($comment) {
-    concat::fragment { "rspamd ${configfile} config /${section_key} 01 comment":
-      target => $full_file,
-      content => join(suffix(prefix(split($comment, '\n'), "${indent}# "), "\n")),
-    }
-  }
-
-  $printed_value = rspamd::print_config_value($value, $type)
-  $semicolon = $printed_value ? {
-    /\A<</ => '',
-    default => ";\n"
-  }
-    
-  concat::fragment { "rspamd ${configfile} config /${section_key} 02":
-    target => $full_file,
-    content => "${indent}${entry_key} = ${printed_value}${semicolon}",
+  rspamd::ucl_config { "rspamd config ${full_file} ${configkey}":
+    file    => $full_file,
+    key     => $configkey,
+    value   => $value,
+    type    => $ype,
+    comment => $comment,
+    ensure  => $ensure,
+    notify  => Service['rspamd'],
   }
 }
 
