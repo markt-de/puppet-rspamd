@@ -29,7 +29,8 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
         rspamd::create_config_resources($value, $params, $qualified_key)
       }
       default: {
-        rspamd::config { $qualified_key:
+        rspamd::config { "${params[file]}:${qualified_key}":
+          key   => $qualified_key,
           value => $value,
           * => $params
         }
