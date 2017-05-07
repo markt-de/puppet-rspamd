@@ -101,7 +101,7 @@ define rspamd::config (
     file    => $full_file,
     key     => $configkey,
     value   => $value,
-    type    => $ype,
+    type    => $type,
     comment => $comment,
     ensure  => $ensure,
     notify  => Service['rspamd'],
