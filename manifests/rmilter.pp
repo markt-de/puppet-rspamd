@@ -1,46 +1,25 @@
 # Class: rspamd::rmilter
 # ===========================
 #
-# Installs and configures rmilter
+# This class installs and manages the rmilter service that can be used to
+# connect your MTA to the Rspamd system.
 #
-# Parameters
-# ----------
-#
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
+# @summary this class allows you to install and configure the rmilter service
+# 
 # @example
-#    class { 'rspamd':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
+#   include rspamd::rmilter
 #
-# Authors
-# -------
+# @param packages_install  whether to install the rmilter package
+# @param service_manage    whether to manage the rmilter service
+# @param config_path       the path containing the rmilter config files
+# @param purge_unmanaged   whether rmilter.conf.d config files not managed by this module should be purged
+# @param disable_legacy_features
+#   Disable rmilter's legacy features that have been re-implemented in rspamd and are no longer maintained 
+#   in rmilter. Future versions of rmilter will disable those by default, until then, this class does that.
 #
-# Bernhard Frauendienst <puppet@nospam.obeliks.de>
+#   These features are: limits, greylisting, dkim
 #
-# Copyright
-# ---------
-#
-# Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
+# @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 class rspamd::rmilter (
   Boolean $packages_install        = true,

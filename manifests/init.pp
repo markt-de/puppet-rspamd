@@ -1,46 +1,22 @@
 # Class: rspamd
 # ===========================
 #
-# Full description of class rspamd here.
+# Main entry point for the rspamd module
 #
-# Parameters
-# ----------
-#
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
+# @summary this class allows you to install and configure the Rspamd system and its services
+# 
 # @example
-#    class { 'rspamd':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
+#   include rspamd
 #
-# Authors
-# -------
+# @param packages_install  whether to install the rspamd package
+# @param service_manage    whether to manage the rspamd service
+# @param rmilter	   whether to install the rmilter service (includes {rspamd::rmilter})
+# @param repo_baseurl	   use a different repo url instead of rspamd.com upstream repo
+# @param manage_package_repo whether to add the upstream package repo to your system (includes {rspamd::repo})
+# @param config_path       the path containing the rspamd config directory
+# @param purge_unmanaged   whether local.d/override.d config files not managed by this module should be purged
 #
-# Bernhard Frauendienst <puppet@nospam.obeliks.de>
-#
-# Copyright
-# ---------
-#
-# Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
+# @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 class rspamd (
   Boolean $packages_install        = true,

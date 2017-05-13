@@ -1,22 +1,23 @@
-# == Function: rspamd::create_config_resources()
+# Function: rspamd::create_config_resources()
+# ==================
+#
+# @summary create rspamd::config resources from a nested hash (e.g. from hiera)
 #
 # Create rspamd::config resources from a nested hash, suitable for
 # conveniently loading values from hiera.
 # The key-value pairs from the hash represent config keys and values
 # passed to rspamd::config for simple values, Hash values recursively
 # create nested sections.
+# 
+# @param config_hash a hash of (non-hierarchical) key names mapped to values
+# @param params      a hash of params passed to rspamd::config (must not include :key or :value)
+# @param section     the section name will be prefixed to the key to form a hierarchy, will usually
+#   only be specified on recursive calls from within this function itself
 #
-# === Authors
+# @see rspamd::create_config_file_resources
+# @see rspamd::config
 #
-# Bernhard Frauendienst <puppet@nospam.obeliks.de>
-#
-# === Copyright
-#
-# Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
-#
-# === License
-#
-# 2-clause BSD license
+# @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params, Optional[String] $section=undef) {
   $config_hash.each |$key, $value| {

@@ -1,4 +1,10 @@
-# PRIVATE CLASS: do not use directly
+# Class: rspamd::repo::apt_stable
+# =============
+#
+# @summary includes the rspamd.com/apt-stable apt repo
+# @note PRIVATE CLASS: do not use directly
+# @see rspamd::repo
+# 
 class rspamd::repo::apt_stable inherits rspamd::repo {
   include ::apt
 

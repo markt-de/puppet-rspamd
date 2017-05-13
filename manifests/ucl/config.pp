@@ -1,20 +1,22 @@
-# Class: rspamd::ucl::config
+# rspamd::ucl::config
 # ===========================
 #
-# Manages a single UCL (Universal Configuration Language) config entry
+# @summary manages a single UCL (Universal Configuration Language) config entry
 #
-# This class is only for internal use, use rspam::config or rspam::rmilter::config
-# instead.
+# @note This class is only for internal use, use rspam::config or rspam::rmilter::config
+#   instead.
 #
-# Authors
-# -------
+# @param file  the file to put the entry in
+# @param key   the entry's key
+# @param value the entry's value
+# @param type  the type to enforce (or `auto` for auto-detection)
+# @param comment an optional comment to be printed above the entry
+# @param ensure whether the entry should be `present` or `absent`
 #
-# Bernhard Frauendienst <puppet@nospam.obeliks.de>
+# @see rspamd::config
+# @see rspamd::rmilter::config
 #
-# Copyright
-# ---------
-#
-# Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
+# @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 define rspamd::ucl::config (
   Stdlib::Absolutepath $file,

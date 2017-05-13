@@ -1,18 +1,16 @@
-# == Function: rspamd::ucl::print_config_value()
+# Function: rspamd::ucl::print_config_value()
+# ===================
 #
-# Returns a properly quoted UCL config value
+# @summary returns a properly quoted UCL config value
+# @param value the value to be printed
+# @param type  the type to be enforced (or `auto` to detect from value)
 #
-# === Authors
+# @return the formatted config value suitable for inclusion in a ucl config file
 #
-# Bernhard Frauendienst <puppet@nospam.obeliks.de>
+# @see puppet_classes::rspamd::config
+# @see puppet_classes::rspamd::rmilter::config
 #
-# === Copyright
-#
-# Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
-#
-# === License
-#
-# 2-clause BSD license
+# @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
   $re_number = /\A(\d+(\.\d+)?([kKmMgG]b?|s|min|d|w|y)?|0x[0-9A-F]+)\z/

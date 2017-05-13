@@ -1,20 +1,20 @@
 # Class: rspamd::ucl::file
 # ===========================
 #
-# Manages a single UCL (Universal Configuration Language) config file
+# @summary manages a single UCL (Universal Configuration Language) config file
 #
-# This class is only for internal use, use rspam::config or rspam::rmilter::config
-# instead.
+# @note This class is only for internal use, use rspam::config or rspam::rmilter::config
+#   instead.
 #
-# Authors
-# -------
+# @param file  the file to put the entry in
+# @param comment an optional comment to be printed at the top of the file instead of
+#   the default warning
+# @param ensure whether the file should be `present` or `absent`
 #
-# Bernhard Frauendienst <puppet@nospam.obeliks.de>
+# @see rspamd::config
+# @see rspamd::rmilter::config
 #
-# Copyright
-# ---------
-#
-# Copyright 2017 Bernhard Frauendienst, unless otherwise noted.
+# @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 define rspamd::ucl::file (
   Stdlib::Absolutepath $file        = $title,
