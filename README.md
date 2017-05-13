@@ -65,6 +65,7 @@ rspamd::config {
 ```
 
 This results the following config file `/etc/rspamd/local.d/classifier-bayes.conf`:
+
 ```
 # This file is managed by Puppet. DO NOT EDIT.
 backend = redis;
@@ -82,11 +83,13 @@ statfile {
 
 The provided `rspam::create_config_resources` and `rspam::create_config_file_resources`
 functions allow for a much more convenient usage, especially with values stored in hiera:
+
 ```puppet
 class profile::rspamd {
   rspamd::create_config_file_resources(hiera_hash("${title}::config", {}))
 }
 ```
+
 ```yaml
 profile::rspamd::config:
   classifier-bayes:
