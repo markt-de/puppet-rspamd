@@ -142,21 +142,38 @@ rspamd::config {
 }</code></pre>
 
 <p>This results the following config file
-<code>/etc/rspamd/local.d/classifier-bayes.conf</code>: <code> # This file
-is managed by Puppet. DO NOT EDIT. backend = redis; servers =
-&quot;127.0.0.1:6379&quot;; statfile {   spam = false;   symbol =
-&#39;BAYES_HAM&#39;; } statfile {   spam = true;   symbol =
-&#39;BAYES_SPAM&#39;; } </code></p>
+<code>/etc/rspamd/local.d/classifier-bayes.conf</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># This file is managed by Puppet. DO NOT EDIT.
+</span><span class='id identifier rubyid_backend'>backend</span> <span class='op'>=</span> <span class='id identifier rubyid_redis'>redis</span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_servers'>servers</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>127.0.0.1:6379</span><span class='tstring_end'>&quot;</span></span><span class='semicolon'>;</span>
+<span class='id identifier rubyid_statfile'>statfile</span> <span class='lbrace'>{</span>
+  <span class='id identifier rubyid_spam'>spam</span> <span class='op'>=</span> <span class='kw'>false</span><span class='semicolon'>;</span>
+  <span class='id identifier rubyid_symbol'>symbol</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BAYES_HAM</span><span class='tstring_end'>&#39;</span></span><span class='semicolon'>;</span>
+<span class='rbrace'>}</span>
+<span class='id identifier rubyid_statfile'>statfile</span> <span class='lbrace'>{</span>
+  <span class='id identifier rubyid_spam'>spam</span> <span class='op'>=</span> <span class='kw'>true</span><span class='semicolon'>;</span>
+  <span class='id identifier rubyid_symbol'>symbol</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>BAYES_SPAM</span><span class='tstring_end'>&#39;</span></span><span class='semicolon'>;</span>
+<span class='rbrace'>}</span>
+</code></pre>
 
 <p>The provided <code>rspam::create_config_resources</code> and
 <code>rspam::create_config_file_resources</code> functions allow for a much
-more convenient usage, especially with values stored in hiera: <code>puppet
-class profile::rspamd {  
-rspamd::create_config_file_resources(hiera_hash(&quot;${title}::config&quot;,
-{})) } </code> <code>yaml profile::rspamd::config:   classifier-bayes:    
-backend: redis     servers: &quot;127.0.0.1:6379&quot;     statfile:      
-- symbol: BAYES_HAM         spam: false       - symbol: BAYES_SPAM        
-spam: true </code></p>
+more convenient usage, especially with values stored in hiera:</p>
+
+<pre class="code ruby"><code class="ruby">class profile::rspamd {
+  rspamd::create_config_file_resources(hiera_hash(&quot;${title}::config&quot;, {}))
+}</code></pre>
+
+<pre class="code ruby"><code class="ruby">profile::rspamd::config:
+  classifier-bayes:
+    backend: redis
+    servers: &quot;127.0.0.1:6379&quot;
+    statfile:
+      - symbol: BAYES_HAM
+        spam: false
+      - symbol: BAYES_SPAM
+        spam: true</code></pre>
 
 <h2 id="label-Reference">Reference</h2>
 
@@ -190,7 +207,7 @@ Github.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sat May 13 16:46:15 2017 by
+  Generated on Sat May 13 16:49:30 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>
