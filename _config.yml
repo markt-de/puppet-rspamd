@@ -1,1 +1,2 @@
 include: _index.html
+theme: jekyll-theme-minimal
