@@ -59,19 +59,17 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
         }
         $re_number, $re_boolean: {
           # Make sure strings that look like numbers and booleans aren't printed verbatim
-          String($value, "%p")
+          rspamd::ucl::quote_string_value($value)
         }
         /\A[A-Za-z0-9]+\z/: {
           $value
         }
         String: {
-          # let's assume the puppet string representation is good enough for rspamd.
-          # Please file a bug if it isn't.
-          String($value, "%p")
+          rspamd::ucl::quote_string_value($value)
         }
         default: {
-          # for everything else, convert to string, and then let puppet quote it
-          String(String($value), "%p")
+          # for everything else, convert to string, and then quote it
+          rspamd::ucl::quote_string_value(String($value))
         }
       }
     }
