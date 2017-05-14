@@ -57,6 +57,10 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
           }
           "<<${eod}\n${value}\n${eod}\n"
         }
+        $re_number, $re_boolean: {
+          # Make sure strings that look like numbers and booleans aren't printed verbatim
+          String($value, "%p")
+        }
         /\A[A-Za-z0-9]+\z/: {
           $value
         }
