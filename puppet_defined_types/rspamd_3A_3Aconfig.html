@@ -122,20 +122,53 @@ recommended by the Rspamd authors.</p>
 <p>To specify which file a config entry should got to, you can use the
 <code>file</code> parameter.</p>
 
-<p>For convenience reasons, however, this resource also allows to encode both
-the values for $key and $file into the resource&#39;s name (which is usally
-the same as its title).</p>
+<p>For convenience reasons, however, this resource also allows to encode the
+values for $sections, $key, and $file into the resource&#39;s name (which
+is usally the same as its title).</p>
 
 <p>If the $name of the resource matches the format
-“&lt;file&gt;:&lt;name&gt;”, and both $file and $key have not been
-specified, the values from the name are used. This simplifies creating
-unique resources for identical settings in different files.</p>
+“&lt;file&gt;:&lt;sections&gt;.&lt;name&gt;”, and all of $file, $sections,
+and $key have not been specified, the values from the name are used. This
+simplifies creating unique resources for identical settings in different
+files.</p>
 
   </div>
 </div>
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
+  
+    <li>
+      
+        <span class='name'>sections</span>
+      
+      
+        <span class='type'>(<tt>Optional[Array[String]]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>An array of section names that define the hierarchical name of this key.
+E.g. <code>[&quot;classifier&quot;, &quot;bayes&quot;] to denote
+the</code>classifier “bayes” {` section.</p>
+
+<p>If arrays of values are required (including arrays of maps, i.e. multiple
+sections with the same name), the key must be succeeded by an bracketed
+index, e.g.</p>
+
+<pre class="code ruby"><code class="ruby">sections =&gt; [&quot;statfile[0]&quot;],
+key      =&gt; &quot;token&quot;,
+value    =&gt; &quot;BAYES_HAM&quot;,
+
+sections =&gt; [&quot;statifle[1]&quot;],
+key      =&gt; &quot;token&quot;,
+value    =&gt; &quot;BAYES_SPAM&quot;,</code></pre>
+</div>
+      
+    </li>
   
     <li>
       
@@ -150,18 +183,8 @@ unique resources for identical settings in different files.</p>
       
         &mdash;
         <div class='inline'>
-<p>The key name of the config setting. The key is expected as a hierachical
-value, defining both sections/maps and entry keys, separated by dots
-(&#39;.&#39;). E.g. the value <code>backend.servers</code> would denote the
-<code>servers</code> key in the <code>backend</code> section.</p>
-
-<p>If arrays of values are required (including arrays of maps, i.e. multiple
-sections with the same name), the key must be succeeded by an bracketed
-index, e.g.</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_statfile'>statfile</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAYES_HAM</span><span class='tstring_end'>&quot;</span></span>
-<span class='id identifier rubyid_statifle'>statifle</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BAYES_SPAM</span><span class='tstring_end'>&quot;</span></span>
-</code></pre>
+<p>The key name of the config setting. The key is expected as a single
+non-hierachical name without any sections/maps.</p>
 </div>
       
     </li>
@@ -318,14 +341,6 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
         <pre class="lines">
 
 
-115
-116
-117
-118
-119
-120
-121
-122
 123
 124
 125
@@ -353,13 +368,27 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 147
 148
 149
-150</pre>
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/config.pp', line 115</span>
+        <pre class="code"><span class="info file"># File 'manifests/config.pp', line 123</span>
 
 define rspamd::config (
   Optional[String] $file            = undef,
+  Optional[Array[String]] $sections = undef,
   Optional[String] $key             = undef,
   $value,
   Rspamd::Ucl::ValueType $type      = &#39;auto&#39;,
@@ -367,11 +396,13 @@ define rspamd::config (
   Optional[String] $comment         = undef,
   Enum[&#39;present&#39;, &#39;absent&#39;] $ensure = &#39;present&#39;,
 ) {
-  if (!$key and !$file and $name =~ /^([^:]+):(.*)$/) {
+  if (!$key and !$sections and !$file and $name =~ /\A([^:]+):(.+\.)?([^.]+)\z/) {
     $configfile = $1
-    $configkey = $2
+    $configsections = split($2, &#39;\.&#39;)
+    $configkey = $3
   } else {
     $configfile = $file
+    $configsections = pick($sections, [])
     $configkey = pick($key, $name)
   }
   unless $configfile {
@@ -384,14 +415,16 @@ define rspamd::config (
   }
   $full_file = &quot;${rspamd::config_path}/${folder}/${configfile}.conf&quot;
 
-  rspamd::ucl::config { &quot;rspamd config ${full_file} ${configkey}&quot;:
-    file    =&gt; $full_file,
-    key     =&gt; $configkey,
-    value   =&gt; $value,
-    type    =&gt; $type,
-    comment =&gt; $comment,
-    ensure  =&gt; $ensure,
-    notify  =&gt; Service[&#39;rspamd&#39;],
+  $full_key = join($configsections + $configkey, &#39;/&#39;)
+  rspamd::ucl::config { &quot;rspamd config ${full_file} ${full_key}&quot;:
+    file     =&gt; $full_file,
+    sections =&gt; $configsections,
+    key      =&gt; $configkey,
+    value    =&gt; $value,
+    type     =&gt; $type,
+    comment  =&gt; $comment,
+    ensure   =&gt; $ensure,
+    notify   =&gt; Service[&#39;rspamd&#39;],
   }
 }</pre>
       </td>
@@ -401,7 +434,7 @@ define rspamd::config (
 </div>
 
       <div id="footer">
-  Generated on Sat May 13 16:49:30 2017 by
+  Generated on Mon May 15 18:04:39 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

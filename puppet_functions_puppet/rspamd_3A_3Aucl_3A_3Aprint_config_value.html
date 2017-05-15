@@ -248,7 +248,9 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 75
 76
 77
-78</pre>
+78
+79
+80</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'functions/ucl/print_config_value.pp', line 15</span>
@@ -298,17 +300,19 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
           }
           &quot;&lt;&lt;${eod}\n${value}\n${eod}\n&quot;
         }
+        $re_number, $re_boolean: {
+          # Make sure strings that look like numbers and booleans aren&#39;t printed verbatim
+          rspamd::ucl::quote_string_value($value)
+        }
         /\A[A-Za-z0-9]+\z/: {
           $value
         }
         String: {
-          # let&#39;s assume the puppet string representation is good enough for rspamd.
-          # Please file a bug if it isn&#39;t.
-          String($value, &quot;%p&quot;)
+          rspamd::ucl::quote_string_value($value)
         }
         default: {
-          # for everything else, convert to string, and then let puppet quote it
-          String(String($value), &quot;%p&quot;)
+          # for everything else, convert to string, and then quote it
+          rspamd::ucl::quote_string_value(String($value))
         }
       }
     }
@@ -326,7 +330,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
 </div>
 
       <div id="footer">
-  Generated on Sat May 13 16:49:30 2017 by
+  Generated on Mon May 15 18:04:39 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

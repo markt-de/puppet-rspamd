@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Function: rspamd::create_config_file_resources (Puppet Language)
+  Puppet Function: rspamd::ucl::quote_string_value (Puppet Language)
   
     &mdash; Documentation by YARD 0.9.9
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "puppet_functions_puppet::rspamd::create_config_file_resources";
+  pathId = "puppet_functions_puppet::rspamd::ucl::quote_string_value";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (r)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Functions</span></span>
      &raquo; 
-    <span class="title">rspamd::create_config_file_resources</span>
+    <span class="title">rspamd::ucl::quote_string_value</span>
   
 </div>
 
@@ -59,12 +59,12 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Function: rspamd::create_config_file_resources</h1>
+      <div id="content"><h1>Puppet Function: rspamd::ucl::quote_string_value</h1>
 <div class="box_info">
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      functions/create_config_file_resources.pp
+      functions/ucl/quote_string_value.pp
     </dd>
   </dl>
   <dl>
@@ -74,7 +74,7 @@
 </div>
 
   <h2>Summary</h2>
-  create {rspamd::config} resources from a nested hash (e.g. from hiera)
+  quotes a string as a valid UCL string
 
 <h2>Overview</h2>
 <div class="method_details first">
@@ -82,7 +82,7 @@
   <div class="tags overload overload_item">
     <span class="overload">
       <span class="overload_item">
-        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::create_config_file_resources(Hash[String, Hash] $configfile_hash, Hash $params = {})</strong> &#x21d2; <tt>Any</tt> </span>
+        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::ucl::quote_string_value(String $value)</strong> &#x21d2; <tt>Any</tt> </span>
       </span>
     </span>
   </div>
@@ -90,15 +90,6 @@
   <div class="docstring">
     <div class="discussion">
       
-<h1 id="label-Function-3A+rspamd-3A-3Acreate_config_file_resources-28-29">Function: rspamd::create_config_file_resources()</h1>
-
-<p>Create rspamdrspamd::config resources from a nested hash, suitable for
-conveniently loading values from hiera.</p>
-
-<p>The first level of keys is the config files to be written to, the values
-being the hierarchical values that will be passed to the
-<span class='object_link'><a href="rspamd_3A_3Acreate_config_resources.html" title="puppet_functions_puppet::rspamd::create_config_resources (puppet_function)">create_config_resources</a></span> function</p>
-
     </div>
   </div>
   <div class="tags">
@@ -108,36 +99,12 @@ being the hierarchical values that will be passed to the
   
     <li>
       
-        <span class='name'>configfile_hash</span>
+        <span class='name'>value</span>
       
       
-        <span class='type'>(<tt>Hash[String, Hash]</tt>)</span>
+        <span class='type'>(<tt>String</tt>)</span>
       
       
-      
-        &mdash;
-        <div class='inline'>
-<p>a hash of config file names mapped to config hashes</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>params</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>{}</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'>
-<p>a hash of params passed to the rspamdrspamd::config resource (:file will be
-overridden)</p>
-</div>
       
     </li>
   
@@ -153,18 +120,14 @@ overridden)</p>
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>the quoted string suitable for inclusion in a ucl config file</p>
+</div>
+      
     </li>
   
 </ul>
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="rspamd_3A_3Acreate_config_resources.html" title="puppet_functions_puppet::rspamd::create_config_resources (puppet_function)">create_config_resources</a></span></li>
-    
-      <li>rspamdrspamd::config</li>
-    
-  </ul>
 <p class="tag_title">Author:</p>
 <ul class="author">
   
@@ -190,24 +153,42 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
         <pre class="lines">
 
 
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
 21
 22
 23
-24
-25
-26
-27
-28</pre>
+24</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'functions/create_config_file_resources.pp', line 21</span>
+        <pre class="code"><span class="info file"># File 'functions/ucl/quote_string_value.pp', line 8</span>
 
-function rspamd::create_config_file_resources(Hash[String, Hash] $configfile_hash, Hash $params = {}) {
-  $configfile_hash.each |$key, $value| {
-    $file_params = {
-      file =&gt; $key
-    } + $params
-    rspamd::create_config_resources($value, $file_params)
+function rspamd::ucl::quote_string_value(String $value) {
+  # this uses puppet&#39;s double-quoted string representation, and assumes
+  # it to be good enough for rspamd. Please file a bug if it isn&#39;t.
+
+  if ($value =~ /(?:&#39;|\$|\p{Cntrl}|\\)/) {
+    # this will already be double-quoted
+    String($value, &quot;%p&quot;)
+  } else {
+    # otherwise enforce double-quotes by prefixing with a &#39;
+    $prefixed = String(&quot;&#39;$value&quot;, &quot;%#p&quot;)
+    if ($prefixed =~ /\A&quot;&#39;(.*)&quot;\z/) {
+      &quot;\&quot;${1}\&quot;&quot;
+    } else {
+      fail(&quot;Expected quoted string to start with \&quot;&#39;, got ${prefixed} instead.&quot;)
+    }
   }
 }</pre>
       </td>

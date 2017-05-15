@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Function: rspamd::create_config_file_resources (Puppet Language)
+  Puppet Function: rspamd::rmilter::create_config_resources (Puppet Language)
   
     &mdash; Documentation by YARD 0.9.9
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "puppet_functions_puppet::rspamd::create_config_file_resources";
+  pathId = "puppet_functions_puppet::rspamd::rmilter::create_config_resources";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (r)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Functions</span></span>
      &raquo; 
-    <span class="title">rspamd::create_config_file_resources</span>
+    <span class="title">rspamd::rmilter::create_config_resources</span>
   
 </div>
 
@@ -59,12 +59,12 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Function: rspamd::create_config_file_resources</h1>
+      <div id="content"><h1>Puppet Function: rspamd::rmilter::create_config_resources</h1>
 <div class="box_info">
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      functions/create_config_file_resources.pp
+      functions/rmilter/create_config_resources.pp
     </dd>
   </dl>
   <dl>
@@ -74,7 +74,7 @@
 </div>
 
   <h2>Summary</h2>
-  create {rspamd::config} resources from a nested hash (e.g. from hiera)
+  create rspamd::rmilter::config resources from a nested hash (e.g. from hiera)
 
 <h2>Overview</h2>
 <div class="method_details first">
@@ -82,7 +82,7 @@
   <div class="tags overload overload_item">
     <span class="overload">
       <span class="overload_item">
-        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::create_config_file_resources(Hash[String, Hash] $configfile_hash, Hash $params = {})</strong> &#x21d2; <tt>Any</tt> </span>
+        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::rmilter::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params = {}, Array[String] $sections = [])</strong> &#x21d2; <tt>Any</tt> </span>
       </span>
     </span>
   </div>
@@ -90,14 +90,12 @@
   <div class="docstring">
     <div class="discussion">
       
-<h1 id="label-Function-3A+rspamd-3A-3Acreate_config_file_resources-28-29">Function: rspamd::create_config_file_resources()</h1>
+<h1 id="label-Function-3A+rspamd-3A-3Armilter-3A-3Acreate_config_resources-28-29">Function: rspamd::rmilter::create_config_resources()</h1>
 
-<p>Create rspamdrspamd::config resources from a nested hash, suitable for
-conveniently loading values from hiera.</p>
-
-<p>The first level of keys is the config files to be written to, the values
-being the hierarchical values that will be passed to the
-<span class='object_link'><a href="rspamd_3A_3Acreate_config_resources.html" title="puppet_functions_puppet::rspamd::create_config_resources (puppet_function)">create_config_resources</a></span> function</p>
+<p>Create rspamd::rmilter::config resources from a nested hash, suitable for
+conveniently loading values from hiera. The key-value pairs from the hash
+represent config keys and values passed to rspamd::rmilter::config for
+simple values, Hash values recursively create nested sections.</p>
 
     </div>
   </div>
@@ -108,16 +106,16 @@ being the hierarchical values that will be passed to the
   
     <li>
       
-        <span class='name'>configfile_hash</span>
+        <span class='name'>config_hash</span>
       
       
-        <span class='type'>(<tt>Hash[String, Hash]</tt>)</span>
+        <span class='type'>(<tt>Hash[String, NotUndef]</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>a hash of config file names mapped to config hashes</p>
+<p>a hash of (non-hierarchical) key names mapped to values</p>
 </div>
       
     </li>
@@ -135,8 +133,27 @@ being the hierarchical values that will be passed to the
       
         &mdash;
         <div class='inline'>
-<p>a hash of params passed to the rspamdrspamd::config resource (:file will be
-overridden)</p>
+<p>a hash of params passed to rspamd::rmilter::config (must not include
+:sections, :key, or :value)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sections</span>
+      
+      
+        <span class='type'>(<tt>Array[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the section names of the hierarchical key, will usually only be specified
+on recursive calls from within this function itself</p>
 </div>
       
     </li>
@@ -160,9 +177,7 @@ overridden)</p>
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li><span class='object_link'><a href="rspamd_3A_3Acreate_config_resources.html" title="puppet_functions_puppet::rspamd::create_config_resources (puppet_function)">create_config_resources</a></span></li>
-    
-      <li>rspamdrspamd::config</li>
+      <li>rspamdrspamd::rmilterrspamd::rmilter::config</li>
     
   </ul>
 <p class="tag_title">Author:</p>
@@ -197,17 +212,47 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 25
 26
 27
-28</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'functions/create_config_file_resources.pp', line 21</span>
+        <pre class="code"><span class="info file"># File 'functions/rmilter/create_config_resources.pp', line 21</span>
 
-function rspamd::create_config_file_resources(Hash[String, Hash] $configfile_hash, Hash $params = {}) {
-  $configfile_hash.each |$key, $value| {
-    $file_params = {
-      file =&gt; $key
-    } + $params
-    rspamd::create_config_resources($value, $file_params)
+function rspamd::rmilter::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params={}, Array[String] $sections=[]) {
+  $config_hash.each |$key, $value| {
+    case $value {
+      Hash: {
+        rspamd::rmilter::create_config_resources($value, $params, $sections + $key)
+      }
+      Array: {
+        $indexed_hash = $value.map |$index, $v| {
+          { &quot;${key}[${index}]&quot; =&gt; $v }
+        }.reduce({}) |$a,$b| { $a + $b }
+        rspamd::rmilter::create_config_resources($indexed_hash, $params, $sections)
+      }
+      default: {
+        rspamd::rmilter::config { &quot;${params[file]}:${join($sections + $key, &#39;.&#39;)}&quot;:
+          sections =&gt; $sections,
+          key      =&gt; $key,
+          value    =&gt; $value,
+          * =&gt; $params
+        }
+      }
+    }
   }
 }</pre>
       </td>

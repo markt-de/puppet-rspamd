@@ -82,7 +82,7 @@
   <div class="tags overload overload_item">
     <span class="overload">
       <span class="overload_item">
-        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params, Optional[String] $section = undef)</strong> &#x21d2; <tt>Any</tt> </span>
+        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params = {}, Array[String] $sections = [])</strong> &#x21d2; <tt>Any</tt> </span>
       </span>
     </span>
   </div>
@@ -128,30 +128,32 @@ values, Hash values recursively create nested sections.</p>
         <span class='type'>(<tt>Hash</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
       
         &mdash;
         <div class='inline'>
-<p>a hash of params passed to rspamd::config (must not include :key or :value)</p>
+<p>a hash of params passed to rspamd::config (must not include :sections,
+:key, or :value)</p>
 </div>
       
     </li>
   
     <li>
       
-        <span class='name'>section</span>
+        <span class='name'>sections</span>
       
       
-        <span class='type'>(<tt>Optional[String]</tt>)</span>
+        <span class='type'>(<tt>Array[String]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
       
       
         &mdash;
         <div class='inline'>
-<p>the section name will be prefixed to the key to form a hierarchy, will
-usually only be specified on recursive calls from within this function
-itself</p>
+<p>the section names of the hierarchical key, will usually only be specified
+on recursive calls from within this function itself</p>
 </div>
       
     </li>
@@ -227,34 +229,28 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 41
 42
 43
-44
-45
-46
-47</pre>
+44</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'functions/create_config_resources.pp', line 22</span>
 
-function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params, Optional[String] $section=undef) {
+function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params={}, Array[String] $sections=[]) {
   $config_hash.each |$key, $value| {
-    $qualified_key = $section ? {
-      Undef =&gt; $key,
-      default =&gt; &quot;${section}.${key}&quot;
-    }
     case $value {
       Hash: {
-        rspamd::create_config_resources($value, $params, $qualified_key)
+        rspamd::create_config_resources($value, $params, $sections + $key)
       }
       Array: {
         $indexed_hash = $value.map |$index, $v| {
           { &quot;${key}[${index}]&quot; =&gt; $v }
         }.reduce({}) |$a,$b| { $a + $b }
-        rspamd::create_config_resources($indexed_hash, $params, $section)
+        rspamd::create_config_resources($indexed_hash, $params, $sections)
       }
       default: {
-        rspamd::config { &quot;${params[file]}:${qualified_key}&quot;:
-          key   =&gt; $qualified_key,
-          value =&gt; $value,
+        rspamd::config { &quot;${params[file]}:${join($sections + $key, &#39;.&#39;)}&quot;:
+          sections =&gt; $sections,
+          key      =&gt; $key,
+          value    =&gt; $value,
           * =&gt; $params
         }
       }
@@ -270,7 +266,7 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
 </div>
 
       <div id="footer">
-  Generated on Sat May 13 16:49:30 2017 by
+  Generated on Mon May 15 18:04:39 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

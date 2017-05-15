@@ -118,6 +118,24 @@
   
     <li>
       
+        <span class='name'>sections</span>
+      
+      
+        <span class='type'>(<tt>Array[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the entry&#39;s sections as an array</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>value</span>
       
       
@@ -222,7 +240,6 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
         <pre class="lines">
 
 
-21
 22
 23
 24
@@ -280,14 +297,16 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 76
 77
 78
-79</pre>
+79
+80</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/ucl/config.pp', line 21</span>
+        <pre class="code"><span class="info file"># File 'manifests/ucl/config.pp', line 22</span>
 
 define rspamd::ucl::config (
   Stdlib::Absolutepath $file,
   String $key,
+  Array[String] $sections           = [],
   $value,
   Rspamd::Ucl::ValueType $type      = &#39;auto&#39;,
   Optional[String] $comment         = undef,
@@ -295,8 +314,7 @@ define rspamd::ucl::config (
 ) {
   ensure_resource(&#39;rspamd::ucl::file&#39;, $file)
 
-  $sections = split($key, &#39;\.&#39;)
-  $depth = length($sections)-1
+  $depth = length($sections)
   if ($depth &gt; 0) {
     Integer[1,$depth].each |$i| {
       $section = join($sections[0,$i], &#39;/&#39;)
@@ -320,10 +338,10 @@ define rspamd::ucl::config (
 
   # now for the value itself
   $indent = sprintf(&quot;%${$depth*2}s&quot;, &#39;&#39;)
-  $section_key = join($sections, &#39;/&#39;)
-  $entry_key = $sections[-1] ? {
+  $section_key = join($sections + $key, &#39;/&#39;)
+  $entry_key = $key ? {
     /^(.*)\[\d+\]$/ =&gt; $1,
-    default        =&gt; $sections[-1]
+    default         =&gt; $key
   }
 
   if ($comment) {
@@ -351,7 +369,7 @@ define rspamd::ucl::config (
 </div>
 
       <div id="footer">
-  Generated on Sat May 13 16:49:30 2017 by
+  Generated on Mon May 15 18:04:39 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>
