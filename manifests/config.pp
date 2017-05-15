@@ -52,29 +52,37 @@
 # To specify which file a config entry should got to, you can use the `file` 
 # parameter.
 #
-# For convenience reasons, however, this resource also allows to encode both the 
-# values for $key and $file into the resource's name (which is usally the same as 
+# For convenience reasons, however, this resource also allows to encode the values 
+# for $sections, $key, and $file into the resource's name (which is usally the same as 
 # its title).
 #
-# If the $name of the resource matches the format "<file>:<name>", and both $file
-# and $key have not been specified, the values from the name are used.
+# If the $name of the resource matches the format "<file>:<sections>.<name>", and all
+# of $file, $sections, and $key have not been specified, the values from the name are 
+# used.
 # This simplifies creating unique resources for identical settings in different 
 # files.
 #
-# @param key
-#   The key name of the config setting. The key is expected as a hierachical value, 
-#   defining both sections/maps and entry keys, separated by dots ('.').
-#   E.g. the value `backend.servers` would denote the `servers` key in the `backend`
-#   section.
-#   
+# @param sections
+#   An array of section names that define the hierarchical name of this key.
+#   E.g. `["classifier", "bayes"] to denote the `classifier "bayes" {` section.
+#
 #   If arrays of values are required (including arrays of maps, i.e. multiple 
 #   sections with the same name), the key must be succeeded by an bracketed index,
 #   e.g.
 #
 #   ```
-#   statfile[0].token = "BAYES_HAM"
-#   statifle[1].token = "BAYES_SPAM"
+#   sections => ["statfile[0]"],
+#   key      => "token",
+#   value    => "BAYES_HAM",
+#
+#   sections => ["statifle[1]"],
+#   key      => "token",
+#   value    => "BAYES_SPAM",
 #   ```
+#
+# @param key
+#   The key name of the config setting. The key is expected as a single non-hierachical 
+#   name without any sections/maps.
 #
 # @param file
 #   The file to put the value in. This module keeps Rspamd's default configuration
@@ -114,6 +122,7 @@
 #
 define rspamd::config (
   Optional[String] $file            = undef,
+  Optional[Array[String]] $sections = undef,
   Optional[String] $key             = undef,
   $value,
   Rspamd::Ucl::ValueType $type      = 'auto',
@@ -121,11 +130,13 @@ define rspamd::config (
   Optional[String] $comment         = undef,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
-  if (!$key and !$file and $name =~ /^([^:]+):(.*)$/) {
+  if (!$key and !$sections and !$file and $name =~ /\A([^:]+):(.+\.)?([^.]+)\z/) {
     $configfile = $1
-    $configkey = $2
+    $configsections = split($2, '\.')
+    $configkey = $3
   } else {
     $configfile = $file
+    $configsections = pick($sections, [])
     $configkey = pick($key, $name)
   }
   unless $configfile {
@@ -138,14 +149,16 @@ define rspamd::config (
   }
   $full_file = "${rspamd::config_path}/${folder}/${configfile}.conf"
 
-  rspamd::ucl::config { "rspamd config ${full_file} ${configkey}":
-    file    => $full_file,
-    key     => $configkey,
-    value   => $value,
-    type    => $type,
-    comment => $comment,
-    ensure  => $ensure,
-    notify  => Service['rspamd'],
+  $full_key = join($configsections + $configkey, '/')
+  rspamd::ucl::config { "rspamd config ${full_file} ${full_key}":
+    file     => $full_file,
+    sections => $configsections,
+    key      => $configkey,
+    value    => $value,
+    type     => $type,
+    comment  => $comment,
+    ensure   => $ensure,
+    notify   => Service['rspamd'],
   }
 }
 

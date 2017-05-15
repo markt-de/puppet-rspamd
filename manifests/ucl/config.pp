@@ -6,12 +6,13 @@
 # @note This class is only for internal use, use rspam::config or rspam::rmilter::config
 #   instead.
 #
-# @param file  the file to put the entry in
-# @param key   the entry's key
-# @param value the entry's value
-# @param type  the type to enforce (or `auto` for auto-detection)
-# @param comment an optional comment to be printed above the entry
-# @param ensure whether the entry should be `present` or `absent`
+# @param file     the file to put the entry in
+# @param key      the entry's key
+# @param sections the entry's sections as an array
+# @param value    the entry's value
+# @param type     the type to enforce (or `auto` for auto-detection)
+# @param comment  an optional comment to be printed above the entry
+# @param ensure   whether the entry should be `present` or `absent`
 #
 # @see rspamd::config
 # @see rspamd::rmilter::config
@@ -21,6 +22,7 @@
 define rspamd::ucl::config (
   Stdlib::Absolutepath $file,
   String $key,
+  Array[String] $sections           = [],
   $value,
   Rspamd::Ucl::ValueType $type      = 'auto',
   Optional[String] $comment         = undef,
@@ -28,8 +30,7 @@ define rspamd::ucl::config (
 ) {
   ensure_resource('rspamd::ucl::file', $file)
 
-  $sections = split($key, '\.')
-  $depth = length($sections)-1
+  $depth = length($sections)
   if ($depth > 0) {
     Integer[1,$depth].each |$i| {
       $section = join($sections[0,$i], '/')
@@ -53,10 +54,10 @@ define rspamd::ucl::config (
 
   # now for the value itself
   $indent = sprintf("%${$depth*2}s", '')
-  $section_key = join($sections, '/')
-  $entry_key = $sections[-1] ? {
+  $section_key = join($sections + $key, '/')
+  $entry_key = $key ? {
     /^(.*)\[\d+\]$/ => $1,
-    default        => $sections[-1]
+    default         => $key
   }
 
   if ($comment) {

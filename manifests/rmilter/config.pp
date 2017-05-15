@@ -10,20 +10,40 @@
 # intend its legacy features that have been migrated to rspamd, it only supports
 # the single rmilter.local.conf config file.
 #
-# @param key
-#   The key name of the config setting. The key is expected as a hierachical value, 
-#   defining both sections/maps and entry keys, separated by dots ('.').
-#   E.g. the value `backend.servers` would denote the `servers` key in the `backend`
-#   section.
-#   
+# Title/Name format
+# ------------
+# 
+# For convenience reasons, this resource also allows to encode the values for $section
+# and $key into the resource's name (which is usally the same as its title).
+#
+# If the $name of the resource matches the format "<sections>.<name>", and both
+# $sections and $key have not been specified, the values from the name are 
+# used.
+# This simplifies creating unique resources for identical settings in different 
+# files.
+#
+# @param sections
+#   An array of section names that define the hierarchical name of this key.
+#   E.g. `["classifier", "bayes"] to denote the `classifier "bayes" {` section.
+#
 #   If arrays of values are required (including arrays of maps, i.e. multiple 
 #   sections with the same name), the key must be succeeded by an bracketed index,
 #   e.g.
 #
 #   ```
-#   statfile[0].token = "BAYES_HAM"
-#   statifle[1].token = "BAYES_SPAM"
+#   sections => ["statfile[0]"],
+#   key      => "token",
+#   value    => "BAYES_HAM",
+#
+#   sections => ["statifle[1]"],
+#   key      => "token",
+#   value    => "BAYES_SPAM",
 #   ```
+#
+# @param key
+#   The key name of the config setting. The key is expected as a single non-hierachical 
+#   name without any sections/maps.
+#
 # @param value
 #   the value of this config entry. See `type` for allowed types.
 #
@@ -51,7 +71,8 @@
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 define rspamd::rmilter::config (
-  String $key                       = $title,
+  Optional[Array[String]] $sections = undef,
+  Optional[String] $key             = undef,
   $value,
   Rspamd::Ucl::ValueType $type      = 'auto',
   Optional[String] $comment         = undef,
@@ -59,14 +80,25 @@ define rspamd::rmilter::config (
 ) {
   $full_file = "${rspamd::rmilter::config_path}/rmilter.local.conf"
 
-  rspamd::ucl::config { "rmilter config ${full_file} ${key}":
-    file    => $full_file,
-    key     => $key,
-    value   => $value,
-    type    => $ype,
-    comment => $comment,
-    ensure  => $ensure,
-    notify  => Service['rmilter'],
+  if (!$key and !$sections and $name =~ /\A(.+\.)?([^.]+)\z/) {
+    $configsections = split($1, '\.')
+    $configkey = $2
+  } else {
+    $configsections = pick($sections, [])
+    $configkey = pick($key, $name)
+  }
+
+  $full_key = join($configsections + $configkey, '/')
+  notice("full key = ${full_key}, sections = ${configsections}")
+  rspamd::ucl::config { "rmilter config ${full_file} ${full_key}":
+    file     => $full_file,
+    sections => $configsections,
+    key      => $configkey,
+    value    => $value,
+    type     => $type,
+    comment  => $comment,
+    ensure   => $ensure,
+    notify   => Service['rmilter'],
   }
 }
 
