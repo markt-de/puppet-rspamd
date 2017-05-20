@@ -26,7 +26,6 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
     default => $type,
   }
   
-  notice("Printing ${target_type} ${value}")
   case $target_type {
     'number': {
       case $value {
