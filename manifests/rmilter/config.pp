@@ -8,7 +8,7 @@
 #
 # However, because rmilter's config is much simpler, and this module does not to
 # intend its legacy features that have been migrated to rspamd, it only supports
-# the single rmilter.local.conf config file.
+# the single rmilter.conf.local config file.
 #
 # Title/Name format
 # ------------
@@ -78,7 +78,7 @@ define rspamd::rmilter::config (
   Optional[String] $comment         = undef,
   Enum['present', 'absent'] $ensure = 'present',
 ) {
-  $full_file = "${rspamd::rmilter::config_path}/rmilter.local.conf"
+  $full_file = "${rspamd::rmilter::config_path}/rmilter.conf.local"
 
   if (!$key and !$sections and $name =~ /\A(.+\.)?([^.]+)\z/) {
     $configsections = split($1, '\.')

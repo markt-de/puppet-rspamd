@@ -46,7 +46,7 @@ class rspamd::rmilter (
       purge => 'true',
     }
 
-    rspamd::ucl::file { "${config_path}/rmilter.local.conf": }
+    rspamd::ucl::file { "${config_path}/rmilter.conf.local": }
   }
 
   if ($service_manage) {
