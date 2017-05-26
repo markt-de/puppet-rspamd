@@ -298,7 +298,8 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 77
 78
 79
-80</pre>
+80
+81</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/ucl/config.pp', line 22</span>
@@ -314,10 +315,11 @@ define rspamd::ucl::config (
 ) {
   ensure_resource(&#39;rspamd::ucl::file&#39;, $file)
 
+  $rsections = [&#39;/&#39;] + $sections
   $depth = length($sections)
   if ($depth &gt; 0) {
     Integer[1,$depth].each |$i| {
-      $section = join($sections[0,$i], &#39;/&#39;)
+      $section = join($rsections[0,$i+1], &#39; 03 &#39;)
       $indent = sprintf(&quot;%${($i-1)*2}s&quot;, &#39;&#39;)
 
       # strip the [x] array qualifier
@@ -325,11 +327,11 @@ define rspamd::ucl::config (
         /^(.*)\[\d+\]$/ =&gt; $1,
         default         =&gt; $sections[$i-1]
       }
-      ensure_resource(&#39;concat::fragment&#39;, &quot;rspamd ${file} UCL config /${section} 03 section start&quot;, {
+      ensure_resource(&#39;concat::fragment&#39;, &quot;rspamd ${file} UCL config ${section} 01 section start&quot;, {
         target =&gt; $file,
         content =&gt; &quot;${indent}${section_name} {\n&quot;,
       })
-      ensure_resource(&#39;concat::fragment&#39;, &quot;rspamd ${file} UCL config /${section}/~ section end&quot;, { # ~ sorts last
+      ensure_resource(&#39;concat::fragment&#39;, &quot;rspamd ${file} UCL config ${section} 04 section end&quot;, { # ~ sorts last
         target =&gt; $file,
         content =&gt; &quot;${indent}}\n&quot;,
       })
@@ -338,14 +340,14 @@ define rspamd::ucl::config (
 
   # now for the value itself
   $indent = sprintf(&quot;%${$depth*2}s&quot;, &#39;&#39;)
-  $section_key = join($sections + $key, &#39;/&#39;)
+  $section = join($rsections, &#39; 03 &#39;)
   $entry_key = $key ? {
     /^(.*)\[\d+\]$/ =&gt; $1,
     default         =&gt; $key
   }
 
   if ($comment) {
-    concat::fragment { &quot;rspamd ${file} UCL config /${section_key} 01 comment&quot;:
+    concat::fragment { &quot;rspamd ${file} UCL config ${section} 02 ${key} 01 comment&quot;:
       target =&gt; $file,
       content =&gt; join(suffix(prefix(split($comment, &#39;\n&#39;), &quot;${indent}# &quot;), &quot;\n&quot;)),
     }
@@ -357,7 +359,7 @@ define rspamd::ucl::config (
     default =&gt; &quot;;\n&quot;
   }
     
-  concat::fragment { &quot;rspamd ${file} UCL config /${section_key} 02&quot;:
+  concat::fragment { &quot;rspamd ${file} UCL config ${section} 02 ${key} 02&quot;:
     target =&gt; $file,
     content =&gt; &quot;${indent}${entry_key} = ${printed_value}${semicolon}&quot;,
   }
@@ -369,7 +371,7 @@ define rspamd::ucl::config (
 </div>
 
       <div id="footer">
-  Generated on Mon May 15 18:04:39 2017 by
+  Generated on Fri May 26 14:18:27 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

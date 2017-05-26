@@ -249,8 +249,7 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 76
 77
 78
-79
-80</pre>
+79</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'functions/ucl/print_config_value.pp', line 15</span>
@@ -269,7 +268,6 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
     default =&gt; $type,
   }
   
-  notice(&quot;Printing ${target_type} ${value}&quot;)
   case $target_type {
     &#39;number&#39;: {
       case $value {
@@ -330,7 +328,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
 </div>
 
       <div id="footer">
-  Generated on Mon May 15 18:04:39 2017 by
+  Generated on Fri May 26 14:18:27 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

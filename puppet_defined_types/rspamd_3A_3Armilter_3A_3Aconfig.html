@@ -83,7 +83,7 @@ rspamd. See rspamd::config for details.</p>
 
 <p>However, because rmilter&#39;s config is much simpler, and this module does
 not to intend its legacy features that have been migrated to rspamd, it
-only supports the single rmilter.local.conf config file.</p>
+only supports the single rmilter.conf.local config file.</p>
 
 <h2 id="label-Title-2FName+format">Title/Name format</h2>
 
@@ -307,7 +307,7 @@ define rspamd::rmilter::config (
   Optional[String] $comment         = undef,
   Enum[&#39;present&#39;, &#39;absent&#39;] $ensure = &#39;present&#39;,
 ) {
-  $full_file = &quot;${rspamd::rmilter::config_path}/rmilter.local.conf&quot;
+  $full_file = &quot;${rspamd::rmilter::config_path}/rmilter.conf.local&quot;
 
   if (!$key and !$sections and $name =~ /\A(.+\.)?([^.]+)\z/) {
     $configsections = split($1, &#39;\.&#39;)
@@ -337,7 +337,7 @@ define rspamd::rmilter::config (
 </div>
 
       <div id="footer">
-  Generated on Mon May 15 18:04:39 2017 by
+  Generated on Fri May 26 14:18:27 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

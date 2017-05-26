@@ -293,7 +293,7 @@ class rspamd::rmilter (
       purge =&gt; &#39;true&#39;,
     }
 
-    rspamd::ucl::file { &quot;${config_path}/rmilter.local.conf&quot;: }
+    rspamd::ucl::file { &quot;${config_path}/rmilter.conf.local&quot;: }
   }
 
   if ($service_manage) {
@@ -320,7 +320,7 @@ class rspamd::rmilter (
 </div>
 
       <div id="footer">
-  Generated on Mon May 15 18:04:39 2017 by
+  Generated on Fri May 26 14:18:26 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>
