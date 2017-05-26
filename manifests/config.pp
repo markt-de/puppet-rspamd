@@ -132,7 +132,10 @@ define rspamd::config (
 ) {
   if (!$key and !$sections and !$file and $name =~ /\A([^:]+):(.+\.)?([^.]+)\z/) {
     $configfile = $1
-    $configsections = split($2, '\.')
+    $configsections = $2 ? {
+      Undef => [],
+      default => split($2, '\.'),
+    }
     $configkey = $3
   } else {
     $configfile = $file

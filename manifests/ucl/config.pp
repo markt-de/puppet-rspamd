@@ -30,10 +30,11 @@ define rspamd::ucl::config (
 ) {
   ensure_resource('rspamd::ucl::file', $file)
 
+  $rsections = ['/'] + $sections
   $depth = length($sections)
   if ($depth > 0) {
     Integer[1,$depth].each |$i| {
-      $section = join($sections[0,$i], '/')
+      $section = join($rsections[0,$i+1], ' 03 ')
       $indent = sprintf("%${($i-1)*2}s", '')
 
       # strip the [x] array qualifier
@@ -41,11 +42,11 @@ define rspamd::ucl::config (
         /^(.*)\[\d+\]$/ => $1,
         default         => $sections[$i-1]
       }
-      ensure_resource('concat::fragment', "rspamd ${file} UCL config /${section} 03 section start", {
+      ensure_resource('concat::fragment', "rspamd ${file} UCL config ${section} 01 section start", {
         target => $file,
         content => "${indent}${section_name} {\n",
       })
-      ensure_resource('concat::fragment', "rspamd ${file} UCL config /${section}/~ section end", { # ~ sorts last
+      ensure_resource('concat::fragment', "rspamd ${file} UCL config ${section} 04 section end", { # ~ sorts last
         target => $file,
         content => "${indent}}\n",
       })
@@ -54,14 +55,14 @@ define rspamd::ucl::config (
 
   # now for the value itself
   $indent = sprintf("%${$depth*2}s", '')
-  $section_key = join($sections + $key, '/')
+  $section = join($rsections, ' 03 ')
   $entry_key = $key ? {
     /^(.*)\[\d+\]$/ => $1,
     default         => $key
   }
 
   if ($comment) {
-    concat::fragment { "rspamd ${file} UCL config /${section_key} 01 comment":
+    concat::fragment { "rspamd ${file} UCL config ${section} 02 ${key} 01 comment":
       target => $file,
       content => join(suffix(prefix(split($comment, '\n'), "${indent}# "), "\n")),
     }
@@ -73,7 +74,7 @@ define rspamd::ucl::config (
     default => ";\n"
   }
     
-  concat::fragment { "rspamd ${file} UCL config /${section_key} 02":
+  concat::fragment { "rspamd ${file} UCL config ${section} 02 ${key} 02":
     target => $file,
     content => "${indent}${entry_key} = ${printed_value}${semicolon}",
   }
