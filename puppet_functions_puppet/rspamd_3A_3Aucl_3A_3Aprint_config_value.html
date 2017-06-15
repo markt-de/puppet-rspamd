@@ -82,7 +82,7 @@
   <div class="tags overload overload_item">
     <span class="overload">
       <span class="overload_item">
-        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::ucl::print_config_value(Any $value, Rspamd::Ucl::ValueType $type)</strong> &#x21d2; <tt>Any</tt> </span>
+        <span class="signature first" style="margin-left: 0px;"><strong>rspamd::ucl::print_config_value(Any $value, Rspamd::Ucl::ValueType $type = &#39;auto&#39;)</strong> &#x21d2; <tt>Any</tt> </span>
       </span>
     </span>
   </div>
@@ -122,6 +122,8 @@
       
         <span class='type'>(<tt>Rspamd::Ucl::ValueType</tt>)</span>
       
+      
+        <em class="default">(defaults to: <tt>&#39;auto&#39;</tt>)</em>
       
       
         &mdash;
@@ -247,12 +249,18 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 75
 76
 77
-78</pre>
+78
+79
+80
+81
+82
+83
+84</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'functions/ucl/print_config_value.pp', line 14</span>
 
-function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
+function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = &#39;auto&#39;) {
   $re_number = /\A(\d+(\.\d+)?([kKmMgG]b?|s|min|d|w|y)?|0x[0-9A-F]+)\z/
   $re_boolean = /\A(true|false|on|off|yes|no)\z/
   $target_type = $type ? {
@@ -261,6 +269,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
       Numeric =&gt; &#39;number&#39;,
       $re_boolean =&gt; &#39;boolean&#39;,
       Boolean =&gt; &#39;boolean&#39;,
+      Array =&gt; &#39;array&#39;,
       default =&gt; &#39;string&#39;,
     },
     default =&gt; $type,
@@ -312,6 +321,11 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
         }
       }
     }
+    &#39;array&#39;: {
+      $_values = any2array($value)
+      $_joined_values = join($_values.map|$v| { rspamd::ucl::print_config_value($v) }, &#39;, &#39;)
+      &quot;[ ${_joined_values} ]&quot;
+    }
     default: {
       fail(&quot;Invalid value type ${target_type}. This should not happen.&quot;)
     }
@@ -326,7 +340,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 15 13:25:34 2017 by
+  Generated on Thu Jun 15 16:03:50 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

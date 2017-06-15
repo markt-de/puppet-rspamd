@@ -95,7 +95,9 @@
 <p>Create rspamd::config resources from a nested hash, suitable for
 conveniently loading values from hiera. The key-value pairs from the hash
 represent config keys and values passed to rspamd::config for simple
-values, Hash values recursively create nested sections.</p>
+values, Hash values recursively create nested sections. Arrays that only
+contain Hash values are created as multi-value keys (or “duplicate
+sections”), while all other arrays are printed inline (e.g. [a,b,c]).</p>
 
     </div>
   </div>
@@ -207,8 +209,6 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
         <pre class="lines">
 
 
-22
-23
 24
 25
 26
@@ -229,10 +229,12 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 41
 42
 43
-44</pre>
+44
+45
+46</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'functions/create_config_resources.pp', line 22</span>
+        <pre class="code"><span class="info file"># File 'functions/create_config_resources.pp', line 24</span>
 
 function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Hash $params={}, Array[String] $sections=[]) {
   $config_hash.each |$key, $value| {
@@ -240,7 +242,7 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
       Hash: {
         rspamd::create_config_resources($value, $params, $sections + $key)
       }
-      Array: {
+      Array[Hash]: {
         $indexed_hash = $value.map |$index, $v| {
           { &quot;${key}[${index}]&quot; =&gt; $v }
         }.reduce({}) |$a,$b| { $a + $b }
@@ -266,7 +268,7 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 15 13:25:34 2017 by
+  Generated on Thu Jun 15 16:03:50 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>
