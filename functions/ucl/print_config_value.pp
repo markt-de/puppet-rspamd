@@ -11,7 +11,7 @@
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
-function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
+function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = 'auto') {
   $re_number = /\A(\d+(\.\d+)?([kKmMgG]b?|s|min|d|w|y)?|0x[0-9A-F]+)\z/
   $re_boolean = /\A(true|false|on|off|yes|no)\z/
   $target_type = $type ? {
@@ -20,6 +20,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
       Numeric => 'number',
       $re_boolean => 'boolean',
       Boolean => 'boolean',
+      Array => 'array',
       default => 'string',
     },
     default => $type,
@@ -70,6 +71,11 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
           rspamd::ucl::quote_string_value(String($value))
         }
       }
+    }
+    'array': {
+      $_values = any2array($value)
+      $_joined_values = join($_values.map|$v| { rspamd::ucl::print_config_value($v) }, ', ')
+      "[ ${_joined_values} ]"
     }
     default: {
       fail("Invalid value type ${target_type}. This should not happen.")

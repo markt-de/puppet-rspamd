@@ -8,4 +8,4 @@
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
-type Rspamd::Ucl::ValueType = Enum['auto', 'string', 'number', 'boolean']
+type Rspamd::Ucl::ValueType = Enum['auto', 'string', 'number', 'boolean', 'array']

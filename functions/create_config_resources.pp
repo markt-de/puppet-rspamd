@@ -7,7 +7,9 @@
 # conveniently loading values from hiera.
 # The key-value pairs from the hash represent config keys and values
 # passed to rspamd::config for simple values, Hash values recursively
-# create nested sections.
+# create nested sections. Arrays that only contain Hash values are 
+# created as multi-value keys (or "duplicate sections"), while all 
+# other arrays are printed inline (e.g. [a,b,c]).
 # 
 # @param config_hash a hash of (non-hierarchical) key names mapped to values
 # @param params      a hash of params passed to rspamd::config (must not include :sections, :key, or :value)
@@ -25,7 +27,7 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
       Hash: {
         rspamd::create_config_resources($value, $params, $sections + $key)
       }
-      Array: {
+      Array[Hash]: {
         $indexed_hash = $value.map |$index, $v| {
           { "${key}[${index}]" => $v }
         }.reduce({}) |$a,$b| { $a + $b }
