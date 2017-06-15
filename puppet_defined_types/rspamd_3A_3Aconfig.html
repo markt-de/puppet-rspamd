@@ -204,8 +204,8 @@ non-hierachical name without any sections/maps.</p>
         <div class='inline'>
 <p>The file to put the value in. This module keeps Rspamd&#39;s default
 configuration and makes use of its overrides. The value of this parameter
-must not include any path information or file extension. E.g.
-<code>bayes-classifier</code></p>
+must not include any path information. If it contains no dot,
+<code>.conf</code> will be appended. E.g. <code>bayes-classifier</code></p>
 </div>
       
     </li>
@@ -384,7 +384,11 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 163
 164
 165
-166</pre>
+166
+167
+168
+169
+170</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 123</span>
@@ -419,7 +423,11 @@ define rspamd::config (
     &#39;merge&#39; =&gt; &#39;local.d&#39;,
     &#39;override&#39; =&gt; &#39;override.d&#39;,
   }
-  $full_file = &quot;${rspamd::config_path}/${folder}/${configfile}.conf&quot;
+  $full_filename = $configfile ? {
+    /\./    =&gt; $configfile,
+    default =&gt; &quot;${configfile}.conf&quot;,
+  }
+  $full_file = &quot;${rspamd::config_path}/${folder}/${full_filename}&quot;
 
   $full_key = join($configsections + $configkey, &#39;/&#39;)
   rspamd::ucl::config { &quot;rspamd config ${full_file} ${full_key}&quot;:
@@ -440,7 +448,7 @@ define rspamd::config (
 </div>
 
       <div id="footer">
-  Generated on Fri May 26 14:18:27 2017 by
+  Generated on Thu Jun 15 13:25:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

@@ -157,8 +157,6 @@
     
       <li>puppet_classes::rspamdpuppet_classes::rspamd::config</li>
     
-      <li>puppet_classes::rspamd::rmilterpuppet_classes::rspamd::rmilter::config</li>
-    
   </ul>
 <p class="tag_title">Author:</p>
 <ul class="author">
@@ -185,6 +183,7 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
         <pre class="lines">
 
 
+14
 15
 16
 17
@@ -248,11 +247,10 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 75
 76
 77
-78
-79</pre>
+78</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'functions/ucl/print_config_value.pp', line 15</span>
+        <pre class="code"><span class="info file"># File 'functions/ucl/print_config_value.pp', line 14</span>
 
 function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
   $re_number = /\A(\d+(\.\d+)?([kKmMgG]b?|s|min|d|w|y)?|0x[0-9A-F]+)\z/
@@ -328,7 +326,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type) {
 </div>
 
       <div id="footer">
-  Generated on Fri May 26 14:18:27 2017 by
+  Generated on Thu Jun 15 13:25:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

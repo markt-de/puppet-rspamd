@@ -86,14 +86,11 @@ module</a></p>
 <h2 id="label-Description">Description</h2>
 
 <p>This module installs and manages the Rspamd spam filter, and provides
-resources and functions to configure the Rspamd system. It also optionally
-installs the rmilter daemon to integrate rspamd into an MTA that supports
-it, and manages the rspamd.com apt-stable repository. It does, however, not
-configure any of those systems beyond the upstream defaults.</p>
+resources and functions to configure the Rspamd system. It does, however,
+not configure the systems beyond the upstream defaults.</p>
 
 <p>This module is intended to work with Puppet 4 and has been tested with
-Rspamd 1.5.7 and rmilter 1.10.0 on Ubuntu 16.04. Patches to support other
-setups are welcome.</p>
+Rspamd 1.6.1 on Ubuntu 16.04. Patches to support other setups are welcome.</p>
 
 <h2 id="label-Setup">Setup</h2>
 
@@ -103,13 +100,10 @@ setups are welcome.</p>
 <ul><li>
 <p>adds rspamd.com/apt-stable to your APT repository list</p>
 </li><li>
-<p>installs rspamd and rmilter packages</p>
+<p>installs the rspamd package</p>
 </li><li>
 <p>recursively purges all custom rspamd config (e.g. local.d and override.d
 directories)</p>
-</li><li>
-<p>recursively purges all custom rmilter config (e.g. rmilter.local.conf and
-rmilter.conf.d)</p>
 </li></ul>
 
 <h3 id="label-Beginning+with+rspamd">Beginning with rspamd</h3>
@@ -119,9 +113,7 @@ rmilter.conf.d)</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_rspamd'>rspamd</span>
 </code></pre>
 
-<p>This will setup the rspamd service and the rmilter service with the
-upstream default configuration (except that rmilter legacy features are
-disabled).</p>
+<p>This will setup the rspamd service the upstream default configuration.</p>
 
 <h2 id="label-Usage">Usage</h2>
 
@@ -129,9 +121,7 @@ disabled).</p>
 entries. The easiest way to use it, is to put both the file and the
 hierachical config key into the resource title:</p>
 
-<pre class="code ruby"><code class="ruby">class { &#39;rspamd&#39;:
-  rmilter =&gt; false
-}
+<pre class="code ruby"><code class="ruby">class { &#39;rspamd&#39;: }
 rspamd::config {
   &#39;classifier-bayes:backend&#39;: value =&gt; &#39;redis&#39;;
   &#39;classifier-bayes:servers&#39;: value =&gt; &#39;127.0.0.1:6379&#39;;
@@ -189,12 +179,7 @@ href="https://oxc.github.io/puppet-rspamd">oxc.github.io/puppet-rspamd</a>/</p>
 
 <p>Rspamd versions tested:</p>
 <ul><li>
-<p>1.5.7</p>
-</li></ul>
-
-<p>Rmilter versions tested:</p>
-<ul><li>
-<p>1.10.0</p>
+<p>1.6.1</p>
 </li></ul>
 
 <p>Feel free to let me know if it correctly works on a different OS/setup, or
@@ -207,7 +192,7 @@ Github.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Fri May 26 14:18:26 2017 by
+  Generated on Thu Jun 15 13:25:34 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>
