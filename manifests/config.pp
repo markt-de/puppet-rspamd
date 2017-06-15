@@ -87,7 +87,7 @@
 # @param file
 #   The file to put the value in. This module keeps Rspamd's default configuration
 #   and makes use of its overrides. The value of this parameter must not include
-#   any path information or file extension.
+#   any path information. If it contains no dot, `.conf` will be appended.
 #   E.g. `bayes-classifier`
 # 
 # @param value
@@ -150,7 +150,11 @@ define rspamd::config (
     'merge' => 'local.d',
     'override' => 'override.d',
   }
-  $full_file = "${rspamd::config_path}/${folder}/${configfile}.conf"
+  $full_filename = $configfile ? {
+    /\./    => $configfile,
+    default => "${configfile}.conf",
+  }
+  $full_file = "${rspamd::config_path}/${folder}/${full_filename}"
 
   $full_key = join($configsections + $configkey, '/')
   rspamd::ucl::config { "rspamd config ${full_file} ${full_key}":
