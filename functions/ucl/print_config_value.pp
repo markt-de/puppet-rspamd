@@ -8,7 +8,6 @@
 # @return the formatted config value suitable for inclusion in a ucl config file
 #
 # @see puppet_classes::rspamd::config
-# @see puppet_classes::rspamd::rmilter::config
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #

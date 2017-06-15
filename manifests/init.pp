@@ -10,7 +10,6 @@
 #
 # @param packages_install  whether to install the rspamd package
 # @param service_manage    whether to manage the rspamd service
-# @param rmilter	   whether to install the rmilter service (includes {rspamd::rmilter})
 # @param repo_baseurl	   use a different repo url instead of rspamd.com upstream repo
 # @param manage_package_repo whether to add the upstream package repo to your system (includes {rspamd::repo})
 # @param config_path       the path containing the rspamd config directory
@@ -21,8 +20,6 @@
 class rspamd (
   Boolean $packages_install        = true,
   Boolean $service_manage          = true,
-
-  Boolean $rmilter                 = true,
 
   Optional[String] $repo_baseurl   = undef,
   Boolean $manage_package_repo     = true,
@@ -69,9 +66,4 @@ class rspamd (
       baseurl => $repo_baseurl,
     }
   }
-
-  if ($rmilter) {
-    class { 'rspamd::rmilter': }
-  }
-
 }

@@ -3,8 +3,7 @@
 #
 # @summary manages a single UCL (Universal Configuration Language) config entry
 #
-# @note This class is only for internal use, use rspam::config or rspam::rmilter::config
-#   instead.
+# @note This class is only for internal use, use rspam::config instead.
 #
 # @param file     the file to put the entry in
 # @param key      the entry's key
@@ -15,7 +14,6 @@
 # @param ensure   whether the entry should be `present` or `absent`
 #
 # @see rspamd::config
-# @see rspamd::rmilter::config
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #

@@ -14,13 +14,11 @@
 ## Description
 
 This module installs and manages the Rspamd spam filter, and provides resources
-and functions to configure the Rspamd system. It also optionally installs the 
-rmilter daemon to integrate rspamd into an MTA that supports it, and manages the 
-rspamd.com apt-stable repository.
-It does, however, not configure any of those systems beyond the upstream defaults.
+and functions to configure the Rspamd system. 
+It does, however, not configure the systems beyond the upstream defaults.
 
 This module is intended to work with Puppet 4 and has been tested with 
-Rspamd 1.5.7 and rmilter 1.10.0 on Ubuntu 16.04. Patches to support other setups are welcome.
+Rspamd 1.6.1 on Ubuntu 16.04. Patches to support other setups are welcome.
 
 ## Setup
 
@@ -29,9 +27,8 @@ Rspamd 1.5.7 and rmilter 1.10.0 on Ubuntu 16.04. Patches to support other setups
 By default, this package...
 
 * adds rspamd.com/apt-stable to your APT repository list
-* installs rspamd and rmilter packages
+* installs the rspamd package
 * recursively purges all custom rspamd config (e.g. local.d and override.d directories)
-* recursively purges all custom rmilter config (e.g. rmilter.local.conf and rmilter.conf.d)
 
 ### Beginning with rspamd
 
@@ -41,8 +38,7 @@ The simplest way to use this module is:
 include rspamd
 ```
 
-This will setup the rspamd service and the rmilter service with the upstream
-default configuration (except that rmilter legacy features are disabled).
+This will setup the rspamd service the upstream default configuration.
 
 ## Usage
 
@@ -51,9 +47,7 @@ The easiest way to use it, is to put both the file and the hierachical config
 key into the resource title:
 
 ```puppet
-class { 'rspamd':
-  rmilter => false
-}
+class { 'rspamd': }
 rspamd::config {
   'classifier-bayes:backend': value => 'redis';
   'classifier-bayes:servers': value => '127.0.0.1:6379';
@@ -115,11 +109,7 @@ OS Versions tested:
 
 Rspamd versions tested:
 
-* 1.5.7
-
-Rmilter versions tested:
-
-* 1.10.0
+* 1.6.1
 
 Feel free to let me know if it correctly works on a different OS/setup, or 
 submit patches if it doesn't.
