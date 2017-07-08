@@ -13,12 +13,12 @@ function rspamd::ucl::quote_string_value(String $value) {
     # this will already be double-quoted
     String($value, "%p")
   } else {
-    # otherwise enforce double-quotes by prefixing with a '
-    $prefixed = String("'$value", "%#p")
-    if ($prefixed =~ /\A"'(.*)"\z/) {
+    # otherwise enforce double-quotes by prefixing with a \t
+    $prefixed = String("\t$value", "%#p")
+    if ($prefixed =~ /\A"\\t(.*)"\z/) {
       "\"${1}\""
     } else {
-      fail("Expected quoted string to start with \"', got ${prefixed} instead.")
+      fail("Expected quoted string to start with \"\\t, got ${prefixed} instead.")
     }
   }
 }
