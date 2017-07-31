@@ -1,3 +1,8 @@
+## Version 0.2.1
+### Summary
+
+First public release. This version is used by the author on a production system.
+
 ## Version 0.2.0 (unreleased)
 ### Summary
 
