@@ -212,8 +212,8 @@ define rspamd::ucl::file (
 
   if ($comment) {
     concat::fragment { &quot;rspamd ${file} UCL config 01 file warning comment&quot;:
-      target =&gt; $file,
-      content =&gt; join(suffix(prefix(split($comment, &#39;\n&#39;), &quot;# &quot;), &quot;\n&quot;)),
+      target  =&gt; $file,
+      content =&gt; join(suffix(prefix(split($comment, &#39;\n&#39;), &#39;# &#39;), &quot;\n&quot;)),
     }
   }
 }</pre>
@@ -224,7 +224,7 @@ define rspamd::ucl::file (
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 31 14:55:06 2017 by
+  Generated on Mon Jul 31 15:33:54 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

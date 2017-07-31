@@ -274,7 +274,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = 
     },
     default =&gt; $type,
   }
-  
+
   case $target_type {
     &#39;number&#39;: {
       case $value {
@@ -288,7 +288,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = 
     }
     &#39;boolean&#39;: {
       case $value {
-        $re_boolean, Boolean: { 
+        $re_boolean, Boolean: {
           String($value)
         }
         default: {
@@ -340,7 +340,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = 
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 31 14:55:06 2017 by
+  Generated on Mon Jul 31 15:33:54 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

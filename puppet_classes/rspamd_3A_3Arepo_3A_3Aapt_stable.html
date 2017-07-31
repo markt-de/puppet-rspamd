@@ -150,14 +150,14 @@ class rspamd::repo::apt_stable inherits rspamd::repo {
   apt::pin { &#39;rspamd_stable&#39;:
     originator =&gt; &#39;rspamd.com&#39;,
     priority   =&gt; 500,
-  }-&gt;
-  apt::source { &#39;rspamd_stable&#39;:
-    location    =&gt; $_baseurl,
-    release     =&gt; $::lsbdistcodename,
-    repos       =&gt; &quot;main&quot;,
-    key         =&gt; {
-      id          =&gt; &#39;3FA347D5E599BE4595CA2576FFA232EDBF21E25E&#39;,
-      source      =&gt; &#39;https://rspamd.com/apt-stable/gpg.key&#39;,
+  }
+  -&gt; apt::source { &#39;rspamd_stable&#39;:
+    location =&gt; $_baseurl,
+    release  =&gt; $::lsbdistcodename,
+    repos    =&gt; &#39;main&#39;,
+    key      =&gt; {
+      id     =&gt; &#39;3FA347D5E599BE4595CA2576FFA232EDBF21E25E&#39;,
+      source =&gt; &#39;https://rspamd.com/apt-stable/gpg.key&#39;,
     }
   }
 
@@ -171,7 +171,7 @@ class rspamd::repo::apt_stable inherits rspamd::repo {
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 31 14:55:05 2017 by
+  Generated on Mon Jul 31 15:33:54 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

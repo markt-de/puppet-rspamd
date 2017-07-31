@@ -177,7 +177,7 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&quot;/etc/rspamd&quot;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;/etc/rspamd&#39;</tt>)</em>
       
       
         &mdash;
@@ -294,7 +294,7 @@ class rspamd (
   Optional[String] $repo_baseurl   = undef,
   Boolean $manage_package_repo     = true,
 
-  String $config_path              = &quot;/etc/rspamd&quot;,
+  String $config_path              = &#39;/etc/rspamd&#39;,
   Boolean $purge_unmanaged         = true,
 ) {
 
@@ -307,17 +307,17 @@ class rspamd (
   }
 
   if ($purge_unmanaged) {
-    file { &quot;purge unmanaged rspamd local.d files&quot;:
-      path =&gt; &quot;${config_path}/local.d&quot;,
-      ensure =&gt; &#39;directory&#39;,
-      recurse =&gt; &#39;true&#39;,
-      purge =&gt; &#39;true&#39;,
+    file { &#39;purge unmanaged rspamd local.d files&#39;:
+      ensure  =&gt; &#39;directory&#39;,
+      path    =&gt; &quot;${config_path}/local.d&quot;,
+      recurse =&gt; true,
+      purge   =&gt; true,
     }
-    file { &quot;purge unmanaged rspamd override.d files&quot;:
-      path =&gt; &quot;${config_path}/override.d&quot;,
-      ensure =&gt; &#39;directory&#39;,
-      recurse =&gt; &#39;true&#39;,
-      purge =&gt; &#39;true&#39;,
+    file { &#39;purge unmanaged rspamd override.d files&#39;:
+      ensure  =&gt; &#39;directory&#39;,
+      path    =&gt; &quot;${config_path}/override.d&quot;,
+      recurse =&gt; true,
+      purge   =&gt; true,
     }
   }
 
@@ -328,9 +328,9 @@ class rspamd (
       enable  =&gt; true,
       require =&gt; Package[&#39;rspamd&#39;],
     }
-  }  
+  }
 
- 
+
   if($manage_package_repo) {
     class { &#39;rspamd::repo&#39;:
       baseurl =&gt; $repo_baseurl,
@@ -344,7 +344,7 @@ class rspamd (
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 31 14:55:05 2017 by
+  Generated on Mon Jul 31 15:33:54 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>

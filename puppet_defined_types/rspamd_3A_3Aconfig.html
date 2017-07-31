@@ -394,14 +394,14 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 123</span>
 
 define rspamd::config (
-  Optional[String] $file            = undef,
-  Optional[Array[String]] $sections = undef,
-  Optional[String] $key             = undef,
   $value,
   Rspamd::Ucl::ValueType $type      = &#39;auto&#39;,
   Enum[&#39;merge&#39;, &#39;override&#39;] $mode   = &#39;merge&#39;,
-  Optional[String] $comment         = undef,
   Enum[&#39;present&#39;, &#39;absent&#39;] $ensure = &#39;present&#39;,
+  Optional[String] $file            = undef,
+  Optional[Array[String]] $sections = undef,
+  Optional[String] $key             = undef,
+  Optional[String] $comment         = undef,
 ) {
   if (!$key and !$sections and !$file and $name =~ /\A([^:]+):(.+\.)?([^.]+)\z/) {
     $configfile = $1
@@ -416,9 +416,9 @@ define rspamd::config (
     $configkey = pick($key, $name)
   }
   unless $configfile {
-    fail(&quot;Could not detect file name in resource title, must specify one explicitly&quot;)
+    fail(&quot;Could not detect file name in resource title ${title}, must specify one explicitly&quot;)
   }
- 
+
   $folder = $mode ? {
     &#39;merge&#39; =&gt; &#39;local.d&#39;,
     &#39;override&#39; =&gt; &#39;override.d&#39;,
@@ -431,13 +431,13 @@ define rspamd::config (
 
   $full_key = join($configsections + $configkey, &#39;/&#39;)
   rspamd::ucl::config { &quot;rspamd config ${full_file} ${full_key}&quot;:
+    ensure   =&gt; $ensure,
     file     =&gt; $full_file,
     sections =&gt; $configsections,
     key      =&gt; $configkey,
     value    =&gt; $value,
     type     =&gt; $type,
     comment  =&gt; $comment,
-    ensure   =&gt; $ensure,
     notify   =&gt; Service[&#39;rspamd&#39;],
   }
 }</pre>
@@ -448,7 +448,7 @@ define rspamd::config (
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 31 14:55:05 2017 by
+  Generated on Mon Jul 31 15:33:54 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.4).
 </div>
