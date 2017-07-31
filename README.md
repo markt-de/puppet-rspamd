@@ -17,8 +17,8 @@ This module installs and manages the Rspamd spam filter, and provides resources
 and functions to configure the Rspamd system. 
 It does, however, not configure the systems beyond the upstream defaults.
 
-This module is intended to work with Puppet 4 and has been tested with 
-Rspamd 1.6.1 on Ubuntu 16.04. Patches to support other setups are welcome.
+This module is intended to work with Puppet 4.10 and 5 and has been tested with 
+Rspamd 1.6.3 on Ubuntu 16.04. Patches to support other setups are welcome.
 
 ## Setup
 
@@ -109,7 +109,7 @@ OS Versions tested:
 
 Rspamd versions tested:
 
-* 1.6.1
+* 1.6.3
 
 Feel free to let me know if it correctly works on a different OS/setup, or 
 submit patches if it doesn't.
