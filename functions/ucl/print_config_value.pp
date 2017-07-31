@@ -25,7 +25,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = 
     },
     default => $type,
   }
-  
+
   case $target_type {
     'number': {
       case $value {
@@ -39,7 +39,7 @@ function rspamd::ucl::print_config_value($value, Rspamd::Ucl::ValueType $type = 
     }
     'boolean': {
       case $value {
-        $re_boolean, Boolean: { 
+        $re_boolean, Boolean: {
           String($value)
         }
         default: {

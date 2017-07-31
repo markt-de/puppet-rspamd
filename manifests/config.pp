@@ -121,14 +121,14 @@
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 define rspamd::config (
-  Optional[String] $file            = undef,
-  Optional[Array[String]] $sections = undef,
-  Optional[String] $key             = undef,
   $value,
   Rspamd::Ucl::ValueType $type      = 'auto',
   Enum['merge', 'override'] $mode   = 'merge',
-  Optional[String] $comment         = undef,
   Enum['present', 'absent'] $ensure = 'present',
+  Optional[String] $file            = undef,
+  Optional[Array[String]] $sections = undef,
+  Optional[String] $key             = undef,
+  Optional[String] $comment         = undef,
 ) {
   if (!$key and !$sections and !$file and $name =~ /\A([^:]+):(.+\.)?([^.]+)\z/) {
     $configfile = $1
@@ -143,9 +143,9 @@ define rspamd::config (
     $configkey = pick($key, $name)
   }
   unless $configfile {
-    fail("Could not detect file name in resource title, must specify one explicitly")
+    fail("Could not detect file name in resource title ${title}, must specify one explicitly")
   }
- 
+
   $folder = $mode ? {
     'merge' => 'local.d',
     'override' => 'override.d',
@@ -158,13 +158,13 @@ define rspamd::config (
 
   $full_key = join($configsections + $configkey, '/')
   rspamd::ucl::config { "rspamd config ${full_file} ${full_key}":
+    ensure   => $ensure,
     file     => $full_file,
     sections => $configsections,
     key      => $configkey,
     value    => $value,
     type     => $type,
     comment  => $comment,
-    ensure   => $ensure,
     notify   => Service['rspamd'],
   }
 }

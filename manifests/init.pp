@@ -24,7 +24,7 @@ class rspamd (
   Optional[String] $repo_baseurl   = undef,
   Boolean $manage_package_repo     = true,
 
-  String $config_path              = "/etc/rspamd",
+  String $config_path              = '/etc/rspamd',
   Boolean $purge_unmanaged         = true,
 ) {
 
@@ -37,17 +37,17 @@ class rspamd (
   }
 
   if ($purge_unmanaged) {
-    file { "purge unmanaged rspamd local.d files":
-      path => "${config_path}/local.d",
-      ensure => 'directory',
-      recurse => 'true',
-      purge => 'true',
+    file { 'purge unmanaged rspamd local.d files':
+      ensure  => 'directory',
+      path    => "${config_path}/local.d",
+      recurse => true,
+      purge   => true,
     }
-    file { "purge unmanaged rspamd override.d files":
-      path => "${config_path}/override.d",
-      ensure => 'directory',
-      recurse => 'true',
-      purge => 'true',
+    file { 'purge unmanaged rspamd override.d files':
+      ensure  => 'directory',
+      path    => "${config_path}/override.d",
+      recurse => true,
+      purge   => true,
     }
   }
 
@@ -58,9 +58,9 @@ class rspamd (
       enable  => true,
       require => Package['rspamd'],
     }
-  }  
+  }
 
- 
+
   if($manage_package_repo) {
     class { 'rspamd::repo':
       baseurl => $repo_baseurl,

@@ -29,8 +29,8 @@ define rspamd::ucl::file (
 
   if ($comment) {
     concat::fragment { "rspamd ${file} UCL config 01 file warning comment":
-      target => $file,
-      content => join(suffix(prefix(split($comment, '\n'), "# "), "\n")),
+      target  => $file,
+      content => join(suffix(prefix(split($comment, '\n'), '# '), "\n")),
     }
   }
 }

@@ -38,7 +38,7 @@ function rspamd::create_config_resources(Hash[String, NotUndef] $config_hash, Ha
           sections => $sections,
           key      => $key,
           value    => $value,
-          * => $params
+          *        => $params
         }
       }
     }

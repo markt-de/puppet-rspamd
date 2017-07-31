@@ -20,11 +20,11 @@
 define rspamd::ucl::config (
   Stdlib::Absolutepath $file,
   String $key,
-  Array[String] $sections           = [],
   $value,
+  Array[String] $sections           = [],
   Rspamd::Ucl::ValueType $type      = 'auto',
-  Optional[String] $comment         = undef,
   Enum['present', 'absent'] $ensure = 'present',
+  Optional[String] $comment         = undef,
 ) {
   ensure_resource('rspamd::ucl::file', $file)
 
@@ -33,7 +33,7 @@ define rspamd::ucl::config (
   if ($depth > 0) {
     Integer[1,$depth].each |$i| {
       $section = join($rsections[0,$i+1], ' 03 ')
-      $indent = sprintf("%${($i-1)*2}s", '')
+      $indent = sprintf("%${($i - 1)*2}s", '')
 
       # strip the [x] array qualifier
       $section_name = $sections[$i-1] ? {
@@ -41,11 +41,11 @@ define rspamd::ucl::config (
         default         => $sections[$i-1]
       }
       ensure_resource('concat::fragment', "rspamd ${file} UCL config ${section} 01 section start", {
-        target => $file,
+        target  => $file,
         content => "${indent}${section_name} {\n",
       })
       ensure_resource('concat::fragment', "rspamd ${file} UCL config ${section} 04 section end", { # ~ sorts last
-        target => $file,
+        target  => $file,
         content => "${indent}}\n",
       })
     }
@@ -61,19 +61,19 @@ define rspamd::ucl::config (
 
   if ($comment) {
     concat::fragment { "rspamd ${file} UCL config ${section} 02 ${key} 01 comment":
-      target => $file,
+      target  => $file,
       content => join(suffix(prefix(split($comment, '\n'), "${indent}# "), "\n")),
     }
   }
 
   $printed_value = rspamd::ucl::print_config_value($value, $type)
   $semicolon = $printed_value ? {
-    /\A<</ => '',
+    /\A<</  => '',
     default => ";\n"
   }
-    
+
   concat::fragment { "rspamd ${file} UCL config ${section} 02 ${key} 02":
-    target => $file,
+    target  => $file,
     content => "${indent}${entry_key} = ${printed_value}${semicolon}",
   }
 }
