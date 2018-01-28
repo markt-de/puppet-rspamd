@@ -77,4 +77,3 @@ define rspamd::ucl::config (
     content => "${indent}${entry_key} = ${printed_value}${semicolon}",
   }
 }
-

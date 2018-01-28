@@ -8,7 +8,7 @@
 # @example
 #   include rspamd
 #
-# @param packages_install  whether to install the rspamd package
+# @param package_manage    whether to install the rspamd package
 # @param service_manage    whether to manage the rspamd service
 # @param repo_baseurl	   use a different repo url instead of rspamd.com upstream repo
 # @param manage_package_repo whether to add the upstream package repo to your system (includes {rspamd::repo})
@@ -18,52 +18,21 @@
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 class rspamd (
-  Boolean $packages_install        = true,
-  Boolean $service_manage          = true,
-
-  Optional[String] $repo_baseurl   = undef,
-  Boolean $manage_package_repo     = true,
-
-  String $config_path              = '/etc/rspamd',
-  Boolean $purge_unmanaged         = true,
+  String $config_path,
+  Boolean $manage_package_repo,
+  Boolean $package_manage,
+  String $package_name,
+  Boolean $purge_unmanaged,
+  Optional[String] $repo_baseurl,
+  Boolean $service_manage,
 ) {
+  contain rspamd::repo
+  contain rspamd::install
+  contain rspamd::configuration
+  contain rspamd::service
 
-  if ($packages_install) {
-    package { 'rspamd':
-      ensure => 'present',
-      name   => 'rspamd',
-    }
-
-  }
-
-  if ($purge_unmanaged) {
-    file { 'purge unmanaged rspamd local.d files':
-      ensure  => 'directory',
-      path    => "${config_path}/local.d",
-      recurse => true,
-      purge   => true,
-    }
-    file { 'purge unmanaged rspamd override.d files':
-      ensure  => 'directory',
-      path    => "${config_path}/override.d",
-      recurse => true,
-      purge   => true,
-    }
-  }
-
-
-  if ($service_manage) {
-    service { 'rspamd':
-      ensure  => 'running',
-      enable  => true,
-      require => Package['rspamd'],
-    }
-  }
-
-
-  if($manage_package_repo) {
-    class { 'rspamd::repo':
-      baseurl => $repo_baseurl,
-    }
-  }
+  Class['::rspamd::repo']
+  -> Class['::rspamd::install']
+  -> Class['::rspamd::configuration']
+  ~> Class['::rspamd::service']
 }

@@ -168,4 +168,3 @@ define rspamd::config (
     notify   => Service['rspamd'],
   }
 }
-
