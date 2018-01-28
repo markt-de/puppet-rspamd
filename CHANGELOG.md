@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixes
 - Fix links in this changelog
+- Fix repo being added with `undef` URL by default on Debian/Ubuntu.
 
 ## Version [1.0.1] - 2018-01-28
 ### Summary

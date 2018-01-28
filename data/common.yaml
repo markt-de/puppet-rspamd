@@ -4,5 +4,5 @@ rspamd::manage_package_repo: false
 rspamd::package_manage: true
 rspamd::package_name: 'rspamd'
 rspamd::purge_unmanaged: true
-rspamd::repo_baseurl: undef
+rspamd::repo_baseurl: ~
 rspamd::service_manage: true
