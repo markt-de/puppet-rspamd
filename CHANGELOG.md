@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## Version [1.0.1] - 2018-01-28
+### Summary
+This version contains some minor documentation fixes only
+
+### Fixes
+- Fix links in this changelog
+
 ## Version [1.0.0] - 2018-01-28
 ### Summary
 First stable release. This version now requires Puppet 4.9 or greater.
@@ -37,7 +44,8 @@ This version removes `rmilter` support in favor of the `rspamd_proxy` [milter su
 
 Initial development, was not used or tested on a production system
 
-[Unreleased]: https://github.com/oxc/puppet-dovecot/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/oxc/puppet-dovecot/v0.2.1...v1.0.0
-[0.2.1]: https://github.com/oxc/puppet-dovecot/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/oxc/puppet-dovecot/1980687...v0.2.0
+[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/oxc/puppet-rspamd/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/oxc/puppet-rspamd/v0.2.1...v1.0.0
+[0.2.1]: https://github.com/oxc/puppet-rspamd/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/oxc/puppet-rspamd/1980687...v0.2.0
