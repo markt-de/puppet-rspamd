@@ -6,7 +6,7 @@
 <title>
   Puppet Class: rspamd
   
-    &mdash; Documentation by YARD 0.9.9
+    &mdash; Documentation by YARD 0.9.12
   
 </title>
 
@@ -64,6 +64,21 @@
   
   
   <dl>
+    <dt>Inherited by:</dt>
+    <dd>
+      
+      <span class='object_link'><a href="rspamd_3A_3Arepo.html" title="puppet_classes::rspamd::repo (puppet_class)">rspamd::repo</a></span><br/>
+      
+      <span class='object_link'><a href="rspamd_3A_3Ainstall.html" title="puppet_classes::rspamd::install (puppet_class)">rspamd::install</a></span><br/>
+      
+      <span class='object_link'><a href="rspamd_3A_3Aservice.html" title="puppet_classes::rspamd::service (puppet_class)">rspamd::service</a></span><br/>
+      
+      <span class='object_link'><a href="rspamd_3A_3Aconfiguration.html" title="puppet_classes::rspamd::configuration (puppet_class)">rspamd::configuration</a></span><br/>
+      
+    </dd>
+  </dl>
+  
+  <dl>
     <dt>Defined in:</dt>
     <dd>
       manifests/init.pp
@@ -98,13 +113,11 @@
   
     <li>
       
-        <span class='name'>packages_install</span>
+        <span class='name'>package_manage</span>
       
       
         <span class='type'>(<tt>Boolean</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
         &mdash;
@@ -122,8 +135,6 @@
         <span class='type'>(<tt>Boolean</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -140,8 +151,6 @@
         <span class='type'>(<tt>Optional[String]</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>undef</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -157,8 +166,6 @@
       
         <span class='type'>(<tt>Boolean</tt>)</span>
       
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
         &mdash;
@@ -177,8 +184,6 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;/etc/rspamd&#39;</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
@@ -195,14 +200,23 @@
         <span class='type'>(<tt>Boolean</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
       
         &mdash;
         <div class='inline'>
 <p>whether local.d/override.d config files not managed by this module should
 be purged</p>
 </div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>package_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
       
     </li>
   
@@ -251,91 +265,29 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 35
 36
 37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69</pre>
+38</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/init.pp', line 20</span>
 
 class rspamd (
-  Boolean $packages_install        = true,
-  Boolean $service_manage          = true,
-
-  Optional[String] $repo_baseurl   = undef,
-  Boolean $manage_package_repo     = true,
-
-  String $config_path              = &#39;/etc/rspamd&#39;,
-  Boolean $purge_unmanaged         = true,
+  String $config_path,
+  Boolean $manage_package_repo,
+  Boolean $package_manage,
+  String $package_name,
+  Boolean $purge_unmanaged,
+  Optional[String] $repo_baseurl,
+  Boolean $service_manage,
 ) {
+  contain rspamd::repo
+  contain rspamd::install
+  contain rspamd::configuration
+  contain rspamd::service
 
-  if ($packages_install) {
-    package { &#39;rspamd&#39;:
-      ensure =&gt; &#39;present&#39;,
-      name   =&gt; &#39;rspamd&#39;,
-    }
-
-  }
-
-  if ($purge_unmanaged) {
-    file { &#39;purge unmanaged rspamd local.d files&#39;:
-      ensure  =&gt; &#39;directory&#39;,
-      path    =&gt; &quot;${config_path}/local.d&quot;,
-      recurse =&gt; true,
-      purge   =&gt; true,
-    }
-    file { &#39;purge unmanaged rspamd override.d files&#39;:
-      ensure  =&gt; &#39;directory&#39;,
-      path    =&gt; &quot;${config_path}/override.d&quot;,
-      recurse =&gt; true,
-      purge   =&gt; true,
-    }
-  }
-
-
-  if ($service_manage) {
-    service { &#39;rspamd&#39;:
-      ensure  =&gt; &#39;running&#39;,
-      enable  =&gt; true,
-      require =&gt; Package[&#39;rspamd&#39;],
-    }
-  }
-
-
-  if($manage_package_repo) {
-    class { &#39;rspamd::repo&#39;:
-      baseurl =&gt; $repo_baseurl,
-    }
-  }
+  Class[&#39;::rspamd::repo&#39;]
+  -&gt; Class[&#39;::rspamd::install&#39;]
+  -&gt; Class[&#39;::rspamd::configuration&#39;]
+  ~&gt; Class[&#39;::rspamd::service&#39;]
 }</pre>
       </td>
     </tr>
@@ -344,9 +296,7 @@ class rspamd (
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 31 15:33:54 2017 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.9 (ruby-2.3.4).
+     Generated by <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>.
 </div>
 
     </div>

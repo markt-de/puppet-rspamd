@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Puppet Class: rspamd::repo::apt_stable
+  Puppet Class: rspamd::install
   
     &mdash; Documentation by YARD 0.9.12
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "puppet_classes::rspamd::repo::apt_stable";
+  pathId = "puppet_classes::rspamd::install";
   relpath = '../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../_index.html">Index (r)</a> &raquo;
     <span class='title'><span class='object_link'>Puppet Classes</span></span>
      &raquo; 
-    <span class="title">rspamd::repo::apt_stable</span>
+    <span class="title">rspamd::install</span>
   
 </div>
 
@@ -59,43 +59,33 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Puppet Class: rspamd::repo::apt_stable</h1>
+      <div id="content"><h1>Puppet Class: rspamd::install</h1>
 <div class="box_info">
   
   <dl>
     <dt>Inherits:</dt>
-    <dd><span class='object_link'><a href="rspamd_3A_3Arepo.html" title="puppet_classes::rspamd::repo (puppet_class)">rspamd::repo</a></span></dd>
+    <dd><span class='object_link'><a href="rspamd.html" title="puppet_classes::rspamd (puppet_class)">rspamd</a></span></dd>
   </dl>
   
   
   <dl>
     <dt>Defined in:</dt>
     <dd>
-      manifests/repo/apt_stable.pp
+      manifests/install.pp
     </dd>
   </dl>
 </div>
-
-  <h2>Summary</h2>
-  includes the rspamd.com/apt-stable apt repo
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<h1 id="label-Class-3A+rspamd-3A-3Arepo-3A-3Aapt_stable">Class: rspamd::repo::apt_stable</h1>
+<p>This class handles packages. Avoid modifying private classes.</p>
 
   </div>
 </div>
 <div class="tags">
   
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="rspamd_3A_3Arepo.html" title="puppet_classes::rspamd::repo (puppet_class)">puppet_classes::rspamd::repo</a></span></li>
-    
-  </ul>
 
 </div><div class="method_details_list">
   <table class="source_code">
@@ -104,65 +94,25 @@
         <pre class="lines">
 
 
+3
+4
+5
+6
+7
 8
 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35</pre>
+10</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/repo/apt_stable.pp', line 8</span>
+        <pre class="code"><span class="info file"># File 'manifests/install.pp', line 3</span>
 
-class rspamd::repo::apt_stable inherits rspamd::repo {
-  include ::apt
-
-  # Here we have tried to replicate the instructions on the rspamd site:
-  #
-  # https://rspamd.com/downloads.html
-  #
-  $default_baseurl = &#39;http://rspamd.com/apt-stable/&#39;
-
-  $_baseurl = pick($rspamd::repo_baseurl, $default_baseurl)
-
-  apt::pin { &#39;rspamd_stable&#39;:
-    originator =&gt; &#39;rspamd.com&#39;,
-    priority   =&gt; 500,
-  }
-  -&gt; apt::source { &#39;rspamd_stable&#39;:
-    location =&gt; $_baseurl,
-    release  =&gt; $::lsbdistcodename,
-    repos    =&gt; &#39;main&#39;,
-    key      =&gt; {
-      id     =&gt; &#39;3FA347D5E599BE4595CA2576FFA232EDBF21E25E&#39;,
-      source =&gt; &#39;https://rspamd.com/apt-stable/gpg.key&#39;,
+class rspamd::install inherits rspamd {
+  if ($rspamd::package_manage) {
+    package { &#39;rspamd&#39;:
+      ensure =&gt; &#39;present&#39;,
+      name   =&gt; $rspamd::package_name,
     }
   }
-
-  Apt::Source[&#39;rspamd_stable&#39;]-&gt;Package&lt;|tag == &#39;rspamd&#39;|&gt;
-  Class[&#39;Apt::Update&#39;] -&gt; Package&lt;|tag == &#39;rspamd&#39;|&gt;
 }</pre>
       </td>
     </tr>
