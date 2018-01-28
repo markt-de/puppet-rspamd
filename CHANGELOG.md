@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## Version [1.0.2] - 2018-01-28
+### Summary
+This version fixes a regression introduced in 1.0.0 that caused a non-working
+APT repo to be added on Debian/Ubuntu by default.
+
 ### Fixes
 - Fix links in this changelog
 - Fix repo being added with `undef` URL by default on Debian/Ubuntu.
