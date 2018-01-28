@@ -37,7 +37,7 @@ This version removes `rmilter` support in favor of the `rspamd_proxy` [milter su
 
 Initial development, was not used or tested on a production system
 
-[Unreleased]: https://github.com/oxc/puppet-dovecot/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/oxc/puppet-dovecot/v0.2.1...v1.0.0
-[0.2.1]: https://github.com/oxc/puppet-dovecot/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/oxc/puppet-dovecot/1980687...v0.2.0
+[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/oxc/puppet-rspamd/v0.2.1...v1.0.0
+[0.2.1]: https://github.com/oxc/puppet-rspamd/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/oxc/puppet-rspamd/1980687...v0.2.0
