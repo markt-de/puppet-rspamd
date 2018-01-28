@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixes
+- Fix links in this changelog
+
 ## Version [1.0.1] - 2018-01-28
 ### Summary
 This version contains some minor documentation fixes only
@@ -45,7 +48,7 @@ This version removes `rmilter` support in favor of the `rspamd_proxy` [milter su
 Initial development, was not used or tested on a production system
 
 [Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.0.1...HEAD
-[1.0.1]: https://github.com/oxc/puppet-rspamd/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/oxc/puppet-rspamd/v0.2.1...v1.0.0
-[0.2.1]: https://github.com/oxc/puppet-rspamd/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/oxc/puppet-rspamd/1980687...v0.2.0
+[1.0.1]: https://github.com/oxc/puppet-rspamd/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/oxc/puppet-rspamd/compare/v0.2.1...v1.0.0
+[0.2.1]: https://github.com/oxc/puppet-rspamd/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/oxc/puppet-rspamd/compare/1980687...v0.2.0
