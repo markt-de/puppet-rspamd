@@ -1,6 +1,6 @@
 {
   "name": "oxc-rspamd",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "author": "oxc",
   "summary": "Installs and manages Rspamd spam filter",
   "license": "Apache-2.0",
