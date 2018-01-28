@@ -21,7 +21,8 @@ define rspamd::ucl::file (
 ) {
   concat { $file:
     owner => 'root',
-    group => 'root',
+    # Use '0' for compatibity with Linux ("root") and FreeBSD ("wheel")
+    group => 0,
     mode  => '0644',
     warn  => !$comment,
     order => 'alpha',
@@ -34,4 +35,3 @@ define rspamd::ucl::file (
     }
   }
 }
-

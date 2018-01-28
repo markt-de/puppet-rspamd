@@ -14,7 +14,7 @@ class rspamd::repo::apt_stable inherits rspamd::repo {
   #
   $default_baseurl = 'http://rspamd.com/apt-stable/'
 
-  $_baseurl = pick($rspamd::repo::baseurl, $default_baseurl)
+  $_baseurl = pick($rspamd::repo_baseurl, $default_baseurl)
 
   apt::pin { 'rspamd_stable':
     originator => 'rspamd.com',
@@ -33,4 +33,3 @@ class rspamd::repo::apt_stable inherits rspamd::repo {
   Apt::Source['rspamd_stable']->Package<|tag == 'rspamd'|>
   Class['Apt::Update'] -> Package<|tag == 'rspamd'|>
 }
-
