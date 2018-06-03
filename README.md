@@ -75,7 +75,7 @@ statfile {
 ```
 
 
-The provided `rspam::create_config_resources` and `rspam::create_config_file_resources`
+The provided `rspamd::create_config_resources` and `rspamd::create_config_file_resources`
 functions allow for a much more convenient usage, especially with values stored in hiera:
 
 ```puppet
