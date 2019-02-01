@@ -14,6 +14,7 @@
 # @param manage_package_repo whether to add the upstream package repo to your system (includes {rspamd::repo})
 # @param config_path       the path containing the rspamd config directory
 # @param purge_unmanaged   whether local.d/override.d config files not managed by this module should be purged
+# @param configs           configurations, ensured using rspamd::create_config_file_resources
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
@@ -25,11 +26,14 @@ class rspamd (
   Boolean $purge_unmanaged,
   Optional[String] $repo_baseurl,
   Boolean $service_manage,
+  Hash $configs = {},
 ) {
   contain rspamd::repo
   contain rspamd::install
   contain rspamd::configuration
   contain rspamd::service
+
+  rspamd::create_config_file_resources($configs)
 
   Class['::rspamd::repo']
   -> Class['::rspamd::install']

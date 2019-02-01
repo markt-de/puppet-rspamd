@@ -76,16 +76,12 @@ statfile {
 
 
 The provided `rspamd::create_config_resources` and `rspamd::create_config_file_resources`
-functions allow for a much more convenient usage, especially with values stored in hiera:
+functions allow for a much more convenient usage. Especially with values stored in hiera
+the functions are used:
 
-```puppet
-class profile::rspamd {
-  rspamd::create_config_file_resources(hiera_hash("${title}::config", {}))
-}
-```
 
 ```yaml
-profile::rspamd::config:
+rspamd::configs:
   classifier-bayes:
     backend: redis
     servers: "127.0.0.1:6379"
