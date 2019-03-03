@@ -25,6 +25,7 @@ class rspamd (
   Boolean $purge_unmanaged,
   Optional[String] $repo_baseurl,
   Boolean $service_manage,
+  Hash $config,
 ) {
   contain rspamd::repo
   contain rspamd::install

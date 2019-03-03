@@ -6,3 +6,4 @@ rspamd::package_name: 'rspamd'
 rspamd::purge_unmanaged: true
 rspamd::repo_baseurl: ~
 rspamd::service_manage: true
+rspamd::config: {}

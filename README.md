@@ -74,18 +74,11 @@ statfile {
 }
 ```
 
-
-The provided `rspamd::create_config_resources` and `rspamd::create_config_file_resources`
-functions allow for a much more convenient usage, especially with values stored in hiera:
-
-```puppet
-class profile::rspamd {
-  rspamd::create_config_file_resources(hiera_hash("${title}::config", {}))
-}
-```
+Using the rspamd `$config` parameter, values for multiple config files can
+easily be provided from hiera:
 
 ```yaml
-profile::rspamd::config:
+rspamd::config:
   classifier-bayes:
     backend: redis
     servers: "127.0.0.1:6379"
@@ -94,6 +87,21 @@ profile::rspamd::config:
         spam: false
       - symbol: BAYES_SPAM
         spam: true
+```
+
+This uses the provided `rspamd::create_config_resources` and `rspamd::create_config_file_resources`
+functions, which can be used in custom profiles for extended use cases:
+
+```puppet
+class profile::mail::rspamd (
+  Hash $config,
+  Hash $override_config,
+) {
+  class { 'rspamd': }
+
+  rspamd::create_config_file_resources($config)
+  rspamd::create_config_file_resources($override_config, { mode => 'override' })
+}
 ```
 
 

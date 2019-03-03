@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- $rspamd::config parameter to simplify usage from hiera out of the box ([#2]).
 
 ## Release [1.0.2] - 2018-01-28
 ### Summary
@@ -59,3 +61,4 @@ Initial development, was not used or tested on a production system
 [1.0.0]: https://github.com/oxc/puppet-rspamd/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/oxc/puppet-rspamd/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/oxc/puppet-rspamd/compare/1980687...v0.2.0
+[#2]: https://github.com/oxc/puppet-rspamd/pull/2

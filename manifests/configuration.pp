@@ -15,4 +15,6 @@ class rspamd::configuration inherits rspamd {
       purge   => true,
     }
   }
+
+  rspamd::create_config_file_resources($rspamd::config)
 }
