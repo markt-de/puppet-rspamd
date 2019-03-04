@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.13
   
 </title>
 
@@ -62,24 +62,24 @@
 
 <h4 id="label-Table+of+Contents">Table of Contents</h4>
 <ol><li>
-<p><a href="#description">Description</a></p>
+<p><a href="#label-Description">Description</a></p>
 </li><li>
-<p><a href="#setup">Setup - The basics of getting started with rspamd</a></p>
+<p><a href="#label-Setup">Setup - The basics of getting started with rspamd</a></p>
 <ul><li>
-<p><a href="#what-rspamd-affects">What rspamd affects</a></p>
+<p><a href="#label-What+rspamd+affects">What rspamd affects</a></p>
 </li><li>
-<p><a href="#beginning-with-rspamd">Beginning with rspamd</a></p>
+<p><a href="#label-Beginning+with+rspamd">Beginning with rspamd</a></p>
 </li></ul>
 </li><li>
-<p><a href="#usage">Usage - Configuration options and additional
+<p><a href="#label-Usage">Usage - Configuration options and additional
 functionality</a></p>
 </li><li>
-<p><a href="#reference">Reference - An under-the-hood peek at what the module
+<p><a href="#label-Reference">Reference - An under-the-hood peek at what the module
 is doing and how</a></p>
 </li><li>
-<p><a href="#limitations">Limitations - OS compatibility, etc.</a></p>
+<p><a href="#label-Limitations">Limitations - OS compatibility, etc.</a></p>
 </li><li>
-<p><a href="#development">Development - Guide for contributing to the
+<p><a href="#label-Development">Development - Guide for contributing to the
 module</a></p>
 </li></ol>
 
@@ -130,7 +130,8 @@ rspamd::config {
   &#39;classifier-bayes:statfile[0].spam&#39;:   value =&gt; false;
   &#39;classifier-bayes:statfile[1].symbol&#39;: value =&gt; &#39;BAYES_SPAM&#39;;
   &#39;classifier-bayes:statfile[1].spam&#39;:   value =&gt; true;
-}</code></pre>
+}
+</code></pre>
 
 <p>This results the following config file
 <code>/etc/rspamd/local.d/classifier-bayes.conf</code>:</p>
@@ -148,15 +149,10 @@ rspamd::config {
 <span class='rbrace'>}</span>
 </code></pre>
 
-<p>The provided <code>rspam::create_config_resources</code> and
-<code>rspam::create_config_file_resources</code> functions allow for a much
-more convenient usage, especially with values stored in hiera:</p>
+<p>Using the rspamd <code>$config</code> parameter, values for multiple config
+files can easily be provided from hiera:</p>
 
-<pre class="code ruby"><code class="ruby">class profile::rspamd {
-  rspamd::create_config_file_resources(hiera_hash(&quot;${title}::config&quot;, {}))
-}</code></pre>
-
-<pre class="code ruby"><code class="ruby">profile::rspamd::config:
+<pre class="code ruby"><code class="ruby">rspamd::config:
   classifier-bayes:
     backend: redis
     servers: &quot;127.0.0.1:6379&quot;
@@ -164,7 +160,23 @@ more convenient usage, especially with values stored in hiera:</p>
       - symbol: BAYES_HAM
         spam: false
       - symbol: BAYES_SPAM
-        spam: true</code></pre>
+        spam: true
+</code></pre>
+
+<p>This uses the provided <code>rspamd::create_config_resources</code> and
+<code>rspamd::create_config_file_resources</code> functions, which can be
+used in custom profiles for extended use cases:</p>
+
+<pre class="code ruby"><code class="ruby">class profile::mail::rspamd (
+  Hash $config,
+  Hash $override_config,
+) {
+  class { &#39;rspamd&#39;: }
+
+  rspamd::create_config_file_resources($config)
+  rspamd::create_config_file_resources($override_config, { mode =&gt; &#39;override&#39; })
+}
+</code></pre>
 
 <h2 id="label-Reference">Reference</h2>
 

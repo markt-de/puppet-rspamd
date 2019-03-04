@@ -6,7 +6,7 @@
 <title>
   Puppet Class: rspamd
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.13
   
 </title>
 
@@ -220,6 +220,17 @@ be purged</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>config</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Author:</p>
@@ -265,7 +276,8 @@ href="mailto:puppet@nospam.obeliks.de">puppet@nospam.obeliks.de</a></p>
 35
 36
 37
-38</pre>
+38
+39</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/init.pp', line 20</span>
@@ -278,6 +290,7 @@ class rspamd (
   Boolean $purge_unmanaged,
   Optional[String] $repo_baseurl,
   Boolean $service_manage,
+  Hash $config,
 ) {
   contain rspamd::repo
   contain rspamd::install

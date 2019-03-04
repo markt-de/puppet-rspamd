@@ -6,7 +6,7 @@
 <title>
   Puppet Class: rspamd::configuration
   
-    &mdash; Documentation by YARD 0.9.12
+    &mdash; Documentation by YARD 0.9.13
   
 </title>
 
@@ -109,7 +109,9 @@
 15
 16
 17
-18</pre>
+18
+19
+20</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/configuration.pp', line 3</span>
@@ -129,6 +131,8 @@ class rspamd::configuration inherits rspamd {
       purge   =&gt; true,
     }
   }
+
+  rspamd::create_config_file_resources($rspamd::config)
 }</pre>
       </td>
     </tr>
