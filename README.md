@@ -87,6 +87,17 @@ rspamd::config:
         spam: false
       - symbol: BAYES_SPAM
         spam: true
+  milter_headers:
+    use:
+      - authentication-results
+      - x-spam-status
+  'worker-proxy.inc':
+    bind_socket: 'localhost:11332'
+    upstream:
+      local:
+        self_scan: true
+  dkim_signing:
+    sign_local: true
 ```
 
 This uses the provided `rspamd::create_config_resources` and `rspamd::create_config_file_resources`
