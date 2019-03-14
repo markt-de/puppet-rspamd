@@ -161,6 +161,17 @@ files can easily be provided from hiera:</p>
         spam: false
       - symbol: BAYES_SPAM
         spam: true
+  milter_headers:
+    use:
+      - authentication-results
+      - x-spam-status
+  &#39;worker-proxy.inc&#39;:
+    bind_socket: &#39;localhost:11332&#39;
+    upstream:
+      local:
+        self_scan: true
+  dkim_signing:
+    sign_local: true
 </code></pre>
 
 <p>This uses the provided <code>rspamd::create_config_resources</code> and
