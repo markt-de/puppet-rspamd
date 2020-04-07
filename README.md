@@ -18,8 +18,12 @@ and functions to configure the Rspamd system.
 It does, however, not configure the systems beyond the upstream defaults.
 
 This module is intended to work with Puppet 4.10, 5 and 6, and has been tested
-with Rspamd 1.6.3 on Ubuntu 16.04 as well as Rspamd 2.5.0 on CentOS 7.
+with Rspamd versions from 1.6.3 to at least 2.5.0 on Ubuntu 16.04 and CentOS 7.
 Patches to support other setups are welcome.
+
+Please note that while all versions starting from 1.6.3 should still be
+supported, this module is intended to be run with the latest version of Rspamd,
+and compatibility with older versions will not be tested for new releases.
 
 ## Setup
 
@@ -127,11 +131,6 @@ OS Versions tested:
 
 * Ubuntu 16.04
 * CentOS 7
-
-Rspamd versions tested:
-
-* 1.6.3
-* 2.5.0
 
 Feel free to let me know if it correctly works on a different OS/setup, or 
 submit patches if it doesn't.
