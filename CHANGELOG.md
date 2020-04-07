@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.2.0] - 2020-04-07
+This release solely changes documentation and metadata.
+
+### Changed
+- Increase compatible dependency versions in metadata ([#7])
+- Extend README examples ([#5])
+
 ## Release [1.1.0] - 2019-03-03
 This version adds a convenience parameter for simplified hiera usage.
 
@@ -50,11 +57,14 @@ This version removes `rmilter` support in favor of the `rspamd_proxy` [milter su
 ## Version 0.1.0 (unreleased)
 Initial development, was not used or tested on a production system
 
-[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/oxc/puppet-rspamd/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/oxc/puppet-rspamd/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/oxc/puppet-rspamd/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/oxc/puppet-rspamd/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/oxc/puppet-rspamd/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/oxc/puppet-rspamd/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/oxc/puppet-rspamd/compare/1980687...v0.2.0
+[#7]: https://github.com/oxc/puppet-rspamd/pull/7
+[#5]: https://github.com/oxc/puppet-rspamd/issues/5
 [#2]: https://github.com/oxc/puppet-rspamd/pull/2
