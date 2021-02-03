@@ -3,7 +3,7 @@
 class rspamd::install inherits rspamd {
   if ($rspamd::package_manage) {
     package { 'rspamd':
-      ensure => 'present',
+      ensure => $rspamd::package_ensure,
       name   => $rspamd::package_name,
     }
   }

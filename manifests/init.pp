@@ -8,6 +8,7 @@
 # @example
 #   include rspamd
 #
+# @param package_ensure    specifies the ensure state of the rspamd package
 # @param package_manage    whether to install the rspamd package
 # @param service_manage    whether to manage the rspamd service
 # @param repo_baseurl	   use a different repo url instead of rspamd.com upstream repo
@@ -20,6 +21,7 @@
 class rspamd (
   String $config_path,
   Boolean $manage_package_repo,
+  String $package_ensure,
   Boolean $package_manage,
   String $package_name,
   Boolean $purge_unmanaged,
