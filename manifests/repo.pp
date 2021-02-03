@@ -23,7 +23,8 @@ class rspamd::repo inherits rspamd {
         class { 'rspamd::repo::apt_stable': }
       }
       default: {
-        fail("Unsupported managed repository for osfamily: ${::osfamily}, operatingsystem: ${::operatingsystem}, module ${module_name} currently only supports managing repos for osfamily Debian")
+        fail("Unsupported managed repository for osfamily: ${::osfamily}, operatingsystem: ${::operatingsystem},\
+module ${module_name} currently only supports managing repos for osfamily Debian")
       }
     }
   }
