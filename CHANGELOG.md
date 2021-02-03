@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Increase compatible dependency versions in metadata ([#8])
 - Add parameter `$package_ensure` ([#10])
+- Convert to PDK
 
 ## [1.2.0] - 2020-04-07
 This release solely changes documentation and metadata.
