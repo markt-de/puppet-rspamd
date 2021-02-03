@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Add parameter `$package_ensure`
+
 ## [1.2.0] - 2020-04-07
 This release solely changes documentation and metadata.
 
