@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
-- Add parameter `$package_ensure`
+- Increase compatible dependency versions in metadata ([#8])
+- Add parameter `$package_ensure` ([#10])
 
 ## [1.2.0] - 2020-04-07
 This release solely changes documentation and metadata.
@@ -68,6 +69,8 @@ Initial development, was not used or tested on a production system
 [1.0.0]: https://github.com/oxc/puppet-rspamd/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/oxc/puppet-rspamd/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/oxc/puppet-rspamd/compare/1980687...v0.2.0
+[#10]: https://github.com/oxc/puppet-rspamd/pull/10
+[#8]: https://github.com/oxc/puppet-rspamd/pull/8
 [#7]: https://github.com/oxc/puppet-rspamd/pull/7
 [#5]: https://github.com/oxc/puppet-rspamd/issues/5
 [#2]: https://github.com/oxc/puppet-rspamd/pull/2
