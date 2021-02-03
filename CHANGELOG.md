@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.3.0] - 2021-02-03
 ### Added
 - Increase compatible dependency versions in metadata ([#8])
 - Add parameter `$package_ensure` ([#10])
@@ -62,7 +63,8 @@ This version removes `rmilter` support in favor of the `rspamd_proxy` [milter su
 ## Version 0.1.0 (unreleased)
 Initial development, was not used or tested on a production system
 
-[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/oxc/puppet-rspamd/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/oxc/puppet-rspamd/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/oxc/puppet-rspamd/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/oxc/puppet-rspamd/compare/v1.0.1...v1.0.2
