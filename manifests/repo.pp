@@ -16,7 +16,9 @@
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
-class rspamd::repo inherits rspamd {
+class rspamd::repo {
+  assert_private()
+  include rspamd
   if($rspamd::manage_package_repo) {
     case $::osfamily {
       'Debian': {

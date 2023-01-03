@@ -1,6 +1,8 @@
-# @api private 
+# @api private
 # This class handles services. Avoid modifying private classes.
-class rspamd::service inherits rspamd {
+class rspamd::service {
+  assert_private()
+  include rspamd
   if ($rspamd::service_manage) {
     service { 'rspamd':
       ensure    => 'running',

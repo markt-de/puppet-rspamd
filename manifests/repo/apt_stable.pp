@@ -5,7 +5,9 @@
 # @note PRIVATE CLASS: do not use directly
 # @see rspamd::repo
 # 
-class rspamd::repo::apt_stable inherits rspamd::repo {
+class rspamd::repo::apt_stable {
+  assert_private()
+  include rspamd
   include ::apt
 
   # Here we have tried to replicate the instructions on the rspamd site:

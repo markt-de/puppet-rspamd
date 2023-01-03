@@ -1,6 +1,8 @@
-# @api private 
+# @api private
 # This class handles configuration. Avoid modifying private classes.
-class rspamd::configuration inherits rspamd {
+class rspamd::configuration {
+  assert_private()
+  include rspamd
   if ($rspamd::purge_unmanaged) {
     file { 'purge unmanaged rspamd local.d files':
       ensure  => 'directory',
