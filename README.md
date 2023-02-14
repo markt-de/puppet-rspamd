@@ -31,7 +31,7 @@ and compatibility with older versions will not be tested for new releases.
 
 By default, this package...
 
-* adds rspamd.com/apt-stable to your APT repository list
+* install rspamd.com stable repository for Debian/Ubuntu and Fedora/CentOS
 * installs the rspamd package
 * recursively purges all custom rspamd config (e.g. local.d and override.d directories)
 
