@@ -69,17 +69,17 @@ This version removes `rmilter` support in favor of the `rspamd_proxy` [milter su
 ## Version 0.1.0 (unreleased)
 Initial development, was not used or tested on a production system
 
-[Unreleased]: https://github.com/oxc/puppet-rspamd/compare/v1.3.0...HEAD
-[1.3.0]: https://github.com/oxc/puppet-rspamd/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/oxc/puppet-rspamd/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/oxc/puppet-rspamd/compare/v1.0.2...v1.1.0
-[1.0.2]: https://github.com/oxc/puppet-rspamd/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/oxc/puppet-rspamd/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/oxc/puppet-rspamd/compare/v0.2.1...v1.0.0
-[0.2.1]: https://github.com/oxc/puppet-rspamd/compare/v0.2.0...v0.2.1
-[0.2.0]: https://github.com/oxc/puppet-rspamd/compare/1980687...v0.2.0
-[#10]: https://github.com/oxc/puppet-rspamd/pull/10
-[#8]: https://github.com/oxc/puppet-rspamd/pull/8
-[#7]: https://github.com/oxc/puppet-rspamd/pull/7
-[#5]: https://github.com/oxc/puppet-rspamd/issues/5
-[#2]: https://github.com/oxc/puppet-rspamd/pull/2
+[Unreleased]: https://github.com/markt-de/puppet-rspamd/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/markt-de/puppet-rspamd/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/markt-de/puppet-rspamd/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/markt-de/puppet-rspamd/compare/v1.0.2...v1.1.0
+[1.0.2]: https://github.com/markt-de/puppet-rspamd/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/markt-de/puppet-rspamd/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/markt-de/puppet-rspamd/compare/v0.2.1...v1.0.0
+[0.2.1]: https://github.com/markt-de/puppet-rspamd/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/markt-de/puppet-rspamd/compare/1980687...v0.2.0
+[#10]: https://github.com/markt-de/puppet-rspamd/pull/10
+[#8]: https://github.com/markt-de/puppet-rspamd/pull/8
+[#7]: https://github.com/markt-de/puppet-rspamd/pull/7
+[#5]: https://github.com/markt-de/puppet-rspamd/issues/5
+[#2]: https://github.com/markt-de/puppet-rspamd/pull/2

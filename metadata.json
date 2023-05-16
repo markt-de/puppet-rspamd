@@ -1,12 +1,12 @@
 {
-  "name": "oxc-rspamd",
+  "name": "markt-rspamd",
   "version": "1.3.0",
-  "author": "oxc",
+  "author": "markt.de",
   "summary": "Installs and manages Rspamd spam filter",
   "license": "Apache-2.0",
-  "source": "https://github.com/oxc/puppet-rspamd",
-  "project_page": "https://github.com/oxc/puppet-rspamd",
-  "issues_url": "https://github.com/oxc/puppet-rspamd/issues",
+  "source": "https://github.com/markt-de/puppet-rspamd",
+  "project_page": "https://github.com/markt-de/puppet-rspamd",
+  "issues_url": "https://github.com/markt-de/puppet-rspamd/issues",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",

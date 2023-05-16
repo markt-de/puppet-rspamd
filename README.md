@@ -1,4 +1,4 @@
-# rspamd
+# puppet-rspamd
 
 #### Table of Contents
 
