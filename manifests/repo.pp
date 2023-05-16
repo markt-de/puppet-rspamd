@@ -23,6 +23,9 @@ class rspamd::repo {
       'Debian': {
         class { 'rspamd::repo::apt_stable': }
       }
+      'RedHat': {
+        class { 'rspamd::repo::rpm_stable': }
+      }
       default: {
       fail("Unsupported managed repository for osfamily: ${facts['os']['family']}, operatingsystem: ${facts['os']['name']},\
 module ${module_name} currently only supports managing repos for osfamily Debian")
