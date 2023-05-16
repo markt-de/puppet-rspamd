@@ -20,7 +20,7 @@
 define rspamd::ucl::config (
   Stdlib::Absolutepath $file,
   String $key,
-  Variant[Integer, Float, String, Boolean] $value,
+  Any $value,
   Array[String] $sections           = [],
   Rspamd::Ucl::ValueType $type      = 'auto',
   Enum['present', 'absent'] $ensure = 'present',
