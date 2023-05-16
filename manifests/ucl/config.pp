@@ -20,7 +20,7 @@
 define rspamd::ucl::config (
   Stdlib::Absolutepath $file,
   String $key,
-  $value,
+  Variant[Integer, Float, String] $value,
   Array[String] $sections           = [],
   Rspamd::Ucl::ValueType $type      = 'auto',
   Enum['present', 'absent'] $ensure = 'present',
@@ -41,12 +41,12 @@ define rspamd::ucl::config (
         default         => $sections[$i-1]
       }
       ensure_resource('concat::fragment', "rspamd ${file} UCL config ${section} 01 section start", {
-        target  => $file,
-        content => "${indent}${section_name} {\n",
+          target  => $file,
+          content => "${indent}${section_name} {\n",
       })
       ensure_resource('concat::fragment', "rspamd ${file} UCL config ${section} 04 section end", { # ~ sorts last
-        target  => $file,
-        content => "${indent}}\n",
+          target  => $file,
+          content => "${indent}}\n",
       })
     }
   }

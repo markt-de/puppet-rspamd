@@ -121,7 +121,7 @@
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 define rspamd::config (
-  $value,
+  String $value,
   Rspamd::Ucl::ValueType $type      = 'auto',
   Enum['merge', 'override'] $mode   = 'merge',
   Enum['present', 'absent'] $ensure = 'present',

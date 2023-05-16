@@ -12,18 +12,17 @@
 # @example
 #   include rspamd::repo
 #
-# @param baseurl  use a different repo url instead of rspamd.com upstream repo
 #
 # @author Bernhard Frauendienst <puppet@nospam.obeliks.de>
 #
 class rspamd::repo inherits rspamd {
   if($rspamd::manage_package_repo) {
-    case $::osfamily {
+    case $facts['os']['family'] {
       'Debian': {
         class { 'rspamd::repo::apt_stable': }
       }
       default: {
-        fail("Unsupported managed repository for osfamily: ${::osfamily}, operatingsystem: ${::operatingsystem},\
+      fail("Unsupported managed repository for osfamily: ${facts['os']['family']}, operatingsystem: ${facts['os']['name']},\
 module ${module_name} currently only supports managing repos for osfamily Debian")
       }
     }
