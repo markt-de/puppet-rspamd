@@ -1,10 +1,10 @@
-# Class: rspamd::repo::apt_stable
-# =============
+# @summary Includes the rspamd.com/apt-stable APT repository
+# This replicates the instructions on the rspamd site:
+# https://rspamd.com/downloads.html
 #
-# @summary includes the rspamd.com/apt-stable apt repo
-# @note PRIVATE CLASS: do not use directly
 # @see rspamd::repo
 # 
+# @api private
 class rspamd::repo::apt_stable {
   assert_private()
   include rspamd
