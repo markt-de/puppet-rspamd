@@ -67,13 +67,26 @@ define rspamd::ucl::config (
   }
 
   $printed_value = rspamd::ucl::print_config_value($value, $type)
-  $semicolon = $printed_value ? {
-    /\A<</  => '',
-    default => ";\n"
+
+  # UCL macro syntax
+  $is_macro = $key ? {
+    /^\..*$/ => true,
+    default  => false
+  }
+
+  if ($is_macro) {
+    $delimiter = ' '
+    $semicolon = "\n"
+  } else {
+    $delimiter = ' = '
+    $semicolon = $printed_value ? {
+      /\A<</  => '',
+      default => ";\n"
+    }
   }
 
   concat::fragment { "rspamd ${file} UCL config ${section} 02 ${key} 02":
     target  => $file,
-    content => "${indent}${entry_key} = ${printed_value}${semicolon}",
+    content => "${indent}${entry_key}${delimiter}${printed_value}${semicolon}",
   }
 }
