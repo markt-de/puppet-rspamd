@@ -10,12 +10,12 @@ class rspamd::repo::rpm_stable {
   assert_private()
   include rspamd
 
-  if ($facts['os']['distro']['id'] == 'Fedora') {
-    $_osname = downcase($facts['os']['distro']['id'])
+  if ($facts['os']['name'] == 'Fedora') {
+    $_osname = downcase($facts['os']['name'])
   } else {
     $_osname = 'centos'
   }
-  $default_baseurl = "http://rspamd.com/rpm-stable/${_osname}-${facts['os']['release']['major']}/{facts['os']['hardware']}/"
+  $default_baseurl = "http://rspamd.com/rpm-stable/${_osname}-${facts['os']['release']['major']}/${facts['os']['hardware']}/"
 
   $_baseurl = pick($rspamd::repo_baseurl, $default_baseurl)
 
