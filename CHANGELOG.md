@@ -6,14 +6,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-- Update PDK version
-- Replace legacy facts with modern facts
-- Replace legacy class declarations with modern class declarations
-- minor style fixes
-- Add missing class parameter descriptions
-- Fix unit tests
+### Added
+- Add support for managing RPM/YUM repositories ([#14])
+- Add limited support for UCL ".include" macro ([#15])
 - Add basic acceptance test
 - Enable GitHub Actions
+
+### Changed
+- Drop the "inherit" keyword and declare private classes ([#13])
+- Bump module dependencies and OS versions
+- Update PDK version ([#16])
+- Replace legacy facts with modern facts
+- Assorted coding style fixes
+- Convert to Puppet Strings
+
+### Fixed
+- Fix unit tests
 
 ## [1.3.0] - 2021-02-03
 ### Added
@@ -38,14 +46,14 @@ This version adds a convenience parameter for simplified hiera usage.
 This version fixes a regression introduced in 1.0.0 that caused a non-working
 APT repo to be added on Debian/Ubuntu by default.
 
-### Fixes
+### Fixed
 - Fix links in this changelog
 - Fix repo being added with `undef` URL by default on Debian/Ubuntu.
 
 ## Release [1.0.1] - 2018-01-28
 This version contains some minor documentation fixes only
 
-### Fixes
+### Fixed
 - Fix links in this changelog
 
 ## Release [1.0.0] - 2018-01-28
@@ -63,7 +71,7 @@ First stable release. This version now requires Puppet 4.9 or greater.
 ## Release [0.2.1] - 2017-07-31
 First public release. This version is used by the author on a production system.
 
-### Fixes
+### Fixed
 - Fixes several style/lint related issues
 
 ## Release [0.2.0] - 2017-07-31
@@ -81,6 +89,10 @@ Initial development, was not used or tested on a production system
 [1.0.0]: https://github.com/markt-de/puppet-rspamd/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/markt-de/puppet-rspamd/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/markt-de/puppet-rspamd/compare/1980687...v0.2.0
+[#16]: https://github.com/markt-de/puppet-rspamd/pull/16
+[#15]: https://github.com/markt-de/puppet-rspamd/pull/15
+[#14]: https://github.com/markt-de/puppet-rspamd/pull/14
+[#13]: https://github.com/markt-de/puppet-rspamd/pull/13
 [#10]: https://github.com/markt-de/puppet-rspamd/pull/10
 [#8]: https://github.com/markt-de/puppet-rspamd/pull/8
 [#7]: https://github.com/markt-de/puppet-rspamd/pull/7
