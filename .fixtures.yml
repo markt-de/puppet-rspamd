@@ -5,6 +5,7 @@ fixtures:
   forge_modules:
     apt: "puppetlabs/apt"
     concat: "puppetlabs/concat"
+    epel: "puppet/epel"
     stdlib: "puppetlabs/stdlib"
     yumrepo_core: "puppetlabs/yumrepo_core"
   repositories:

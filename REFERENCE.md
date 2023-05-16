@@ -9,7 +9,7 @@
 #### Public Classes
 
 * [`rspamd`](#rspamd): this class allows you to install and configure the Rspamd system and its services
-* [`rspamd::repo`](#rspamd--repo): this class manages the rspamd.com package repository
+* [`rspamd::repo`](#rspamd--repo): Manages the rspamd.com package repository
 
 #### Private Classes
 
@@ -123,14 +123,7 @@ whether local.d/override.d config files not managed by this module should be pur
 
 ### <a name="rspamd--repo"></a>`rspamd::repo`
 
-Class: rspamd::repo
-===========================
-
-This class adds a package repo to your system's package manager.
-
-So far supported are:
-
-* Debian/Ubuntu (adds {rspamd::repo::apt_stable})
+Manages the rspamd.com package repository
 
 #### Examples
 

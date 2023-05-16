@@ -9,6 +9,7 @@
 class rspamd::repo::rpm_stable {
   assert_private()
   include rspamd
+  require epel
 
   if ($facts['os']['name'] == 'Fedora') {
     $_osname = downcase($facts['os']['name'])
