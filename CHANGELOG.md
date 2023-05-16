@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Replace legacy class declarations with modern class declarations
 - minor style fixes
 - Add missing class parameter descriptions
+- Fix unit tests
+- Add basic acceptance test
+- Enable GitHub Actions
 
 ## [1.3.0] - 2021-02-03
 ### Added
