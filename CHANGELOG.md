@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- Update PDK version
+- Replace legacy facts with modern facts
+- Replace legacy class declarations with modern class declarations
+- minor style fixes
+- Add missing class parameter descriptions
+
 ## [1.3.0] - 2021-02-03
 ### Added
 - Increase compatible dependency versions in metadata ([#8])
