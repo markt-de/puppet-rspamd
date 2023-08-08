@@ -18,7 +18,7 @@ class rspamd::repo {
         class { 'rspamd::repo::rpm_stable': }
       }
       default: {
-        fail("Repository management is unsupported in module ${module_name} for this operating system: ${facts['os']['family']}, ${facts['os']['name']}")
+        fail("Repository management is unsupported in module ${module_name} for this operating system: ${facts['os']['family']}, ${facts['os']['name']}") # lint:ignore:140chars
       }
     }
   }
