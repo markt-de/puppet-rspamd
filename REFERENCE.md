@@ -257,7 +257,7 @@ Default value: `undef`
 
 ##### <a name="-rspamd--config--value"></a>`value`
 
-Data type: `String`
+Data type: `Any`
 
 the value of this config entry. See `type` for allowed types.
 
@@ -350,7 +350,7 @@ Default value: `[]`
 
 ##### <a name="-rspamd--ucl--config--value"></a>`value`
 
-Data type: `Variant[Integer, Float, String]`
+Data type: `Any`
 
 the entry's value
 
