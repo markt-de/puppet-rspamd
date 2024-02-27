@@ -3,7 +3,7 @@
 # https://rspamd.com/downloads.html
 #
 # @see rspamd::repo
-# 
+#
 # @api private
 class rspamd::repo::apt_stable {
   assert_private()
@@ -22,14 +22,16 @@ class rspamd::repo::apt_stable {
     originator => 'rspamd.com',
     priority   => 500,
   }
-  -> apt::source { 'rspamd_stable':
+
+  apt::source { 'rspamd_stable':
     location => $_baseurl,
     release  => $facts['os']['distro']['codename'],
     repos    => 'main',
     key      => {
-      id     => '3FA347D5E599BE4595CA2576FFA232EDBF21E25E',
+      name   => 'rspamd-keyring.asc',
       source => 'https://rspamd.com/apt-stable/gpg.key',
     },
+    require  => [Apt::Pin['rspamd_stable']],
   }
 
   Apt::Source['rspamd_stable'] -> Package<|tag == 'rspamd'|>
