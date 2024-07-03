@@ -10,7 +10,7 @@ describe 'rspamd' do
       end
 
       context 'when declaring manage_package_repo is false' do
-        let :params do
+        let(:params) do
           {
             manage_package_repo: false
           }
